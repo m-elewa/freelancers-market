@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    const CLIENT_ROLE = 1;
+
     use Notifiable;
 
     /**
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'password', 'role_id', 'active', 'slug', 'email'
     ];
 
     /**
@@ -36,4 +38,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the full name for the user
+     * @return string
+     */
+    public function name(): string
+    {
+        return ucfirst("{$this->first_name} {$this->last_name}");
+    }
 }
