@@ -4,7 +4,7 @@ use App\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RolesSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -25,8 +25,12 @@ class RolesSeeder extends Seeder
     {
         return [
             [
-                'name' => 'client',
-                'title' => 'Client'
+                'name' => 'user',
+                'title' => 'User'
+            ],
+            [
+                'name' => 'admin',
+                'title' => 'Admin'
             ],
         ];
     }

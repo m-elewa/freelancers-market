@@ -2,14 +2,13 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    const CLIENT_ROLE = 1;
-
     use Notifiable;
 
     /**
@@ -46,5 +45,15 @@ class User extends Authenticatable
     public function name(): string
     {
         return ucfirst("{$this->first_name} {$this->last_name}");
+    }
+
+    public function jobs(): HasMany
+    {
+        return $this->hasMany(Job::class, 'user_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role_id === Role::ADMIN_ROLE;
     }
 }

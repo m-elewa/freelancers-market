@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('role_id')->nullable();
-            $table->boolean('active')->default(true);
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
 
             # Constrains
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->index(['role_id']);
+            $table->foreign('status_id')->references('id')->on('statuses');
             $table->index(['email']);
             $table->index(['slug']);
         });
