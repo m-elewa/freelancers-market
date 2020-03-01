@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Role;
+use App\Status;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -71,7 +73,8 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'slug' => Str::slug($data['first_name'] . ' ' . $data['last_name']),  // TODO: make the slug unique
             'email' => $data['email'],
-            'role_id' => User::CLIENT_ROLE,
+            'role_id' => Role::USER_ROLE,
+            'status_id' => Status::ACTIVE_STATUS,
             'password' => Hash::make($data['password']),
         ]);
     }
