@@ -15,20 +15,32 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class)->create([
-            'email' => 'admin@fuc.com',
-            'role_id' => Role::ADMIN_ROLE,
-        ])->each(function ($user) {
-            $user->jobs()->createMany(factory(Job::class, 30)->make()->toArray())->each(function ($job) {
-                $job->bids()->createMany(factory(Bid::class, 5)->make()->toArray());
-            });
+        // create 30 users and 5 jobs for each one
+        factory(User::class, 30)->create()->each(function ($user) {
+            $user->jobs()->createMany(factory(Job::class, 8)->make()->toArray());
         });
 
-        factory(User::class, 10)->create()->each(function ($user) {
-            $user->jobs()->createMany(factory(Job::class, 5)->make()->toArray())
-                ->each(function ($job) {
-                $job->bids()->createMany(factory(Bid::class, 5)->make()->toArray());
-            });
+        // create the default user
+        $user = factory(User::class)->create([
+            'email' => 'admin@fuc.com',
+            'role_id' => Role::ADMIN_ROLE,
+        ]);
+
+        // create 20 bid for the default user
+        $jobs = Job::inRandomOrder()->take(20)->get();
+        foreach ($jobs as $job) {
+            factory(Bid::class)->create(['user_id' => $user->id, 'job_id' => $job->id]);
+        }
+
+        // create 30 jobs for the default user
+        $user->jobs()->createMany(factory(Job::class, 30)->make()->toArray());
+
+        // create 5 bids for each job
+        Job::all()->each(function ($job) use ($user) {
+            $users = User::where('id', '<>', $user->id)->inRandomOrder()->take(8)->get();
+            foreach ($users as $user) {
+                factory(Bid::class)->create(['user_id' => $user->id, 'job_id' => $job->id]);
+            }
         });
     }
 }
