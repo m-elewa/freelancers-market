@@ -6,10 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Traits\Models\UuidModel;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, UuidModel;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'password', 'role_id', 'active', 'slug', 'email'
+        'first_name', 'last_name', 'password', 'role_id', 'status_id', 'email'
     ];
 
     /**
@@ -49,7 +50,12 @@ class User extends Authenticatable
 
     public function jobs(): HasMany
     {
-        return $this->hasMany(Job::class, 'user_id');
+        return $this->hasMany(Job::class);
+    }
+
+    public function bids(): HasMany
+    {
+        return $this->hasMany(Bid::class);
     }
 
     public function isAdmin(): bool

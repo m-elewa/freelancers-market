@@ -4,16 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\Models\UuidModel;
 
 class Bid extends Model
 {
+    use UuidModel;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'status_id', 'amount', 'user_id'
+        'job_id', 'description', 'status_id', 'amount', 'user_id'
     ];
 
     public function user(): BelongsTo
@@ -24,5 +27,16 @@ class Bid extends Model
     public function job(): BelongsTo
     {
         return $this->belongsTo(Job::class, 'job_id');
+    }
+
+    /**
+     * Scope a query to only include freelancer bid.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFreelancerBid($query)
+    {
+        return $query->where('user_id', auth()->id())->first();
     }
 }
