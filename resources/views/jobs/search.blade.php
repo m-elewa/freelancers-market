@@ -13,8 +13,8 @@
             <div class="card my-2 shadow">
                 
             <div class="card-body">
-                <h5 class="card-title">{{Str::limit($job->title, 100, $end='...')}}</h5>
-                <p class="card-text">{{Str::limit($job->description, 200, $end='...')}}</p>
+                <h5 class="card-title">{{Str::words($job->title, 10)}}</h5>
+                <p class="card-text">{{Str::words($job->description, 20)}}</p>
                 <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-primary">Submit a Proposal</a>
             </div>
 

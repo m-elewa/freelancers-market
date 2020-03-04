@@ -21,10 +21,10 @@
                     @foreach ($bids as $bid)
                     <tr>
                         <th scope="row">
-                            <a href="{{ route('jobs.show', $bid->job->id) }}">{{Str::limit($bid->job->title, 100, $end='...')}}</a>
+                            <a href="{{ route('jobs.show', $bid->job->id) }}">{{Str::words($bid->job->title, 10)}}</a>
                         </th>
                         <td>
-                          {{ Str::limit($bid->description, 80, $end='...') }}
+                          {{ Str::words($bid->description, 10) }}
                         </td>
                         <td>
                           {{  $bid->created_at->diffForHumans() }}

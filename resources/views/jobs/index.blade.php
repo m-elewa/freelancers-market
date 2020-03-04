@@ -21,7 +21,7 @@
                     @foreach ($jobs as $job)
                     <tr>
                         <th scope="row">
-                            <a href="{{ route('jobs.show', $job->id) }}">{{Str::limit($job->title, 100, $end='...')}}</a>
+                            <a href="{{ route('jobs.show', $job->id) }}">{{Str::words($job->title, 10)}}</a>
                         </th>
                         <td>{{$job->created_at->diffForHumans()}}</td>
                         <td>

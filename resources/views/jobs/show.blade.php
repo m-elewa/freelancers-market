@@ -8,7 +8,7 @@
     <h1 class="mb-5 mt-3">{{ $job->title }}</h1>
     <div class="row">
         <div class="col-12">
-            <div class="jumbotron">
+            <div class="jumbotron shadow">
                 <p class="lead">{{ $job->description }}</p>
                 <hr class="my-4">
                 <p>{{ $job->created_at->diffForHumans() }}</p>
