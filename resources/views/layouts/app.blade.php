@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <x-head/>
+    <x-app-layouts.head/>
 </head>
 <body>
     <div id="app">
-        <x-header/>
+        <x-app-layouts.header/>
         
         <main class="py-4">
             @yield('content')
         </main>
 
-        <x-footer/>
+        <x-app-layouts.footer/>
     </div>
 </body>
 </html>
