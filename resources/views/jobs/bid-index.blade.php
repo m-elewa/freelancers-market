@@ -5,10 +5,10 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-3">My Bids</h1>
+    <h1 class="mb-4">My Bids</h1>
     <div class="row">
 
-        <div class="table-responsive">
+        <div class="table-responsive border shadow">
             <table class="table table-striped">
                 <thead>
                   <tr>
@@ -33,9 +33,11 @@
                     @endforeach
                 </tbody>
               </table>
+              <div class="col-12 justify-content-end d-flex">
+                {{ $bids->links() }}
+              </div>
+              
         </div>
-
-        {{ $bids->links() }}
                 
     </div>
 </div>

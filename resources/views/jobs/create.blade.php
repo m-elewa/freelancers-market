@@ -5,9 +5,11 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-3">Post a Project</h1>
-    <div class="row">
-        <div class="col">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <h1 class="mb-3">Post a Project</h1>
+        </div>
+        <div class="col-8">
             <form method="POST" action="{{ route('jobs.store') }}">
                 @csrf
                 <div class="form-group">
@@ -23,8 +25,8 @@
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3"
-                        required>{{ old('description') }}</textarea>
+                    <textarea name="description" class="form-control @error('description') is-invalid @enderror"
+                        id="description" rows="3" required>{{ old('description') }}</textarea>
                     @error('description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

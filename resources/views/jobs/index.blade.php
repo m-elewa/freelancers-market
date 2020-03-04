@@ -5,10 +5,10 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-3">My Projects</h1>
+    <h1 class="mb-4">My Projects</h1>
     <div class="row">
 
-        <div class="table-responsive">
+      <div class="table-responsive border shadow">
             <table class="table table-striped">
                 <thead>
                   <tr>
@@ -25,15 +25,16 @@
                         </th>
                         <td>{{$job->created_at->diffForHumans()}}</td>
                         <td>
-                            <button type="button" class="btn btn-secondary">Archive</button>
+                            <button type="button" class="btn btn-secondary btn-sm">Archive</button>
                         </td>
                       </tr>
                     @endforeach
                 </tbody>
               </table>
+              <div class="col-12 justify-content-end d-flex">
+                {{ $jobs->links() }}
+              </div>
         </div>
-
-        {{ $jobs->links() }}
                 
     </div>
 </div>
