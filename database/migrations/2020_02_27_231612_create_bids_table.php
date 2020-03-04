@@ -14,16 +14,17 @@ class CreateBidsTable extends Migration
     public function up()
     {
         Schema::create('bids', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('job_id')->nullable();
-            $table->unsignedBigInteger('status_id')->nullable();
+            $table->uuid('id')->primary()->unique();
+            $table->uuid('user_id');
+            $table->uuid('job_id');
+            $table->unsignedBigInteger('status_id');
             $table->text('description');
             $table->float('amount', 8, 2);
             $table->timestamps();
             $table->softDeletes();
 
             # Constrains
+            $table->unique(['user_id', 'job_id']);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('status_id')->references('id')->on('statuses');
             $table->foreign('job_id')->references('id')->on('jobs');

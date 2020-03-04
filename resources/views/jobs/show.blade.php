@@ -23,7 +23,6 @@
                     <h5 class="card-title">Bid Details</h5>
 
 
-
                     <form method="POST" action="{{ route('jobs.store-bid', $job->id) }}">
                         @csrf
                         <div class="form-group">
@@ -53,8 +52,6 @@
                     </form>
 
 
-
-                    {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
                 </div>
             </div>
         </div>
@@ -62,26 +59,46 @@
         @can('view-bids', $job)
         <div class="col-12">
 
-          @foreach ($bids as $bid)
-              <div class="card my-3 shadow-sm">
-                  <div class="card-header">
-            {{ $bid->user->name() }}
-              </div>
-              <div class="card-body">
-                  <h5 class="card-title">${{ $bid->amount }}</h5>
-                  <p class="card-text">{{ $bid->description }}</p>
-                  <a href="{{ route('jobs.show', $bid->id) }}" class="btn btn-primary">Show Upwork Profile</a>
-              </div>
-              <div class="card-footer text-muted">
-                  {{$bid->created_at->diffForHumans()}}
-              </div>
-          </div>
-      @endforeach
-  
-      {{ $bids->links() }}
-  
-  </div>
-  @endcan
+            @foreach ($bids as $bid)
+            <div class="card my-3 shadow-sm">
+                <div class="card-header">
+                    {{ $bid->user->name() }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ $bid->amount }}</h5>
+                    <p class="card-text">{{ $bid->description }}</p>
+                    <a href="{{ route('jobs.show', $bid->id) }}" class="btn btn-primary">Show Upwork Profile</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{$bid->created_at->diffForHumans()}}
+                </div>
+            </div>
+            @endforeach
+
+            {{ $bids->links() }}
+
+        </div>
+        @endcan
+
+        @can('view-freelancer-bid', $job)
+        <div class="col-12">
+
+            <div class="card my-3 shadow border-success">
+                <div class="card-header border-success">
+                    {{ $bid->user->name() }}
+                </div>
+                <div class="card-body text-success">
+                    <h5 class="card-title">${{ $bid->amount }}</h5>
+                    <p class="card-text">{{ $bid->description }}</p>
+                    <a href="{{ route('jobs.show', $bid->id) }}" class="btn btn-primary">Show Upwork Profile</a>
+                </div>
+                <div class="card-footer text-muted border-success">
+                    {{$bid->created_at->diffForHumans()}}
+                </div>
+            </div>
+
+        </div>
+        @endcan
 
     </div>
 </div>

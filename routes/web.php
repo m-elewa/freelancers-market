@@ -22,9 +22,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
+Route::get('jobs/bids', 'JobController@bidsIndex')->name('jobs.bids-index')->middleware('auth');
 Route::resource('jobs', 'JobController')->middleware('auth');
 
 Route::get('search/jobs', 'JobController@search')->name('jobs.search')->middleware('auth');
+
 Route::post('jobs/{job}/bid', 'JobController@storeBid')->name('jobs.store-bid')->middleware('auth');
 
 Route::group(['prefix' => 'setting', 'as' => 'setting.', 'middleware' => 'auth'], function() {

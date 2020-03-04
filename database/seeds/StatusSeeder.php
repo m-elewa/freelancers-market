@@ -1,6 +1,7 @@
 <?php
 
 use App\Status;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder
@@ -14,7 +15,7 @@ class StatusSeeder extends Seeder
     {
         foreach ($this->statuses() as $status) {
             Status::create([
-                'key' => $status['name'],
+                'key' => Str::slug($status['name']),
                 'name' => $status['name']
             ]);
         }
@@ -24,16 +25,16 @@ class StatusSeeder extends Seeder
     {
         return [
             [
-                'key' => 'active',
-                'name' => 'Active'
+                'name' => 'Active',
+                'key' => 'active'
             ],
             [
-                'key' => 'archived',
-                'name' => 'Archived'
+                'name' => 'Archive',
+                'key' => 'archive'
             ],
             [
-                'key' => 'blocked',
-                'name' => 'blocked'
+                'name' => 'Block',
+                'key' => 'block'
             ],
         ];
     }

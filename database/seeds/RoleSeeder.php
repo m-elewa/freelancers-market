@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     {
         foreach ($this->roles() as $role) {
             Role::create([
-                'title' => $role['name'],
+                'key' => $role['name'],
                 'name' => $role['name']
             ]);
         }
@@ -25,12 +25,12 @@ class RoleSeeder extends Seeder
     {
         return [
             [
-                'name' => 'user',
-                'title' => 'User'
+                'name' => 'User',
+                'key' => 'user'
             ],
             [
-                'name' => 'admin',
-                'title' => 'Admin'
+                'name' => 'Admin',
+                'key' => 'admin'
             ],
         ];
     }
