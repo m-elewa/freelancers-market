@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'error_pages_layout' => 'errors::illustrated-layout',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
