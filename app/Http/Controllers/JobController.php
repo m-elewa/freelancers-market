@@ -56,7 +56,7 @@ class JobController extends Controller
     {
         return view('jobs.show', [
                 'job' => $job,
-                'bids' => $job->bids()->paginate(5),
+                'bids' => $job->bids()->latest()->paginate(5),
                 'bid' => $job->bids()->freelancerBid()
              ]);
     }
@@ -131,8 +131,8 @@ class JobController extends Controller
      */
     public function bidsIndex()
     {
-        $bids = auth()->user()->bids()->paginate(5);
+        $bids = auth()->user()->bids()->latest()->paginate(5);
 
-        return view('jobs.bids-index', compact('bids'));
+        return view('jobs.bid-index', compact('bids'));
     }
 }

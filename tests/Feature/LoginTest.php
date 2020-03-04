@@ -14,7 +14,7 @@ class LoginTest extends TestCase
     /** @test */
     public function user_can_not_see_home_page_if_not_logged_in(): void
     {
-        $uri = route('home');
+        $uri = route('setting.edit');
 
         $response = $this->get($uri);
         $response->assertRedirect(route('login'));
@@ -43,7 +43,8 @@ class LoginTest extends TestCase
             'email' => $user->email, 
             'password' => 'wrong-password',
         ]);
-        $response->assertRedirect(route('main'));
+
+        $this->user_can_not_see_home_page_if_not_logged_in();
     }
 
     /** @test */

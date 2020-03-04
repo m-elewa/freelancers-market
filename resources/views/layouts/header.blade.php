@@ -22,7 +22,7 @@
                     <a class="nav-link" href="{{ route('jobs.index') }}">My Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('jobs.bids-index') }}">My Bids</a>
+                    <a class="nav-link" href="{{ route('jobs.bid-index') }}">My Bids</a>
                 </li>
             @endguest
         </ul>
