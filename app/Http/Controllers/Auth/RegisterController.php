@@ -71,7 +71,6 @@ class RegisterController extends Controller
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
-            'slug' => Str::slug($data['first_name'] . ' ' . $data['last_name']),  // TODO: make the slug unique
             'email' => $data['email'],
             'role_id' => Role::USER_ROLE,
             'status_id' => Status::ACTIVE_STATUS,

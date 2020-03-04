@@ -23,9 +23,6 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
-        'slug' => function (array $user) {
-            return Str::slug($user['first_name'] . ' ' . $user['last_name']);  // TODO: make it unique
-        },
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'role_id' => Role::USER_ROLE,
