@@ -12,9 +12,9 @@ class JobPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
+        // if ($user->isAdmin()) {
+        //     return true;
+        // }
     }
 
     /**
@@ -100,7 +100,7 @@ class JobPolicy
     }
 
     /**
-     * Determine whether the user can view the job.
+     * Determine whether the user can view the job bids.
      *
      * @param  \App\User  $user
      * @param  \App\Job  $job
@@ -112,7 +112,7 @@ class JobPolicy
     }
 
     /**
-     * Determine whether the user can view the job.
+     * Determine whether the user can create a bid on the job.
      *
      * @param  \App\User  $user
      * @param  \App\Job  $job
@@ -120,6 +120,18 @@ class JobPolicy
      */
     public function createBid(User $user, Job $job)
     {
-        return $user->id !== $job->user_id;
+        return $user->id !== $job->user_id && !$job->bids()->freelancerBid()->count();
+    }
+
+    /**
+     * Determine whether the freelancer can view his bid on the job.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Job  $job
+     * @return mixed
+     */
+    public function viewFreelancerBid(User $user, Job $job)
+    {
+        return $job->bids()->freelancerBid()->count();
     }
 }

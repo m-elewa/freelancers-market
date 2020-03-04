@@ -18,7 +18,7 @@ class JobController extends Controller
     public function index()
     {
         $jobs = auth()->user()->jobs()->latest()->paginate(5);
-        // dd($jobs);
+
         return view('jobs.index', compact('jobs'));
     }
 
@@ -42,6 +42,7 @@ class JobController extends Controller
     {
         $job = array_merge($request->all(), ['status_id' => Status::ACTIVE_STATUS]);
         auth()->user()->jobs()->create($job);
+
         return redirect(route('jobs.index'));
     }
 
@@ -53,7 +54,11 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        return view('jobs.show', ['job' => $job, 'bids' => $job->bids()->paginate(5)]);
+        return view('jobs.show', [
+                'job' => $job,
+                'bids' => $job->bids()->paginate(5),
+                'bid' => $job->bids()->freelancerBid()
+             ]);
     }
 
     /**
@@ -98,7 +103,7 @@ class JobController extends Controller
     public function search()
     {
         $jobs = Job::latest()->paginate(10);
-        // dd($jobs);
+
         return view('jobs.search', compact('jobs'));
     }
 
@@ -111,10 +116,23 @@ class JobController extends Controller
     public function storeBid(StoreBid $request, Job $job)
     {
         $bid = array_merge($request->all(), [
-            'status_id' => Status::ACTIVE_STATUS, 'user_id' => auth()->id()
+                'status_id' => Status::ACTIVE_STATUS,
+                'user_id' => auth()->id()
             ]);
         $job->bids()->create($bid);
 
         return redirect(route('jobs.show', $job->id));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bidsIndex()
+    {
+        $bids = auth()->user()->bids()->paginate(5);
+
+        return view('jobs.bids-index', compact('bids'));
     }
 }
