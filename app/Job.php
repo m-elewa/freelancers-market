@@ -20,6 +20,10 @@ class Job extends Model
         'title', 'description', 'status_id', 'user_id'
     ];
 
+    protected $attributes = [
+        'status_id' => Status::ACTIVE_STATUS,
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -39,6 +39,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $attributes = [
+        'status_id' => Status::ACTIVE_STATUS,
+        'role_id' => Role::USER_ROLE,
+    ];
+
     /**
      * Get the full name for the user
      * @return string
