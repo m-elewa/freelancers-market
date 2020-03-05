@@ -21,7 +21,8 @@ Auth::routes();
 Route::get('jobs/search', 'JobController@search')->name('jobs.search')->middleware('auth');
 Route::get('jobs/bid', 'JobController@bidsIndex')->name('jobs.bid-index')->middleware('auth');
 Route::post('jobs/{job}/create-bid', 'JobController@storeBid')->name('jobs.store-bid')->middleware('auth');
-Route::resource('jobs', 'JobController')->except(['edit', 'update', 'destroy'])->middleware('auth');
+Route::resource('jobs', 'JobController')->except(['edit', 'update', 'destroy', 'show'])->middleware('auth');
+Route::get('jobs/{job}/{title?}', 'JobController@show')->name('jobs.show')->middleware('auth');
 
 
 // setting

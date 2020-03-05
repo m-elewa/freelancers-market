@@ -21,7 +21,7 @@
                     @foreach ($jobs as $job)
                     <tr>
                         <th scope="row">
-                            <a href="{{ route('jobs.show', $job->id) }}">{{Str::words($job->title, 10)}}</a>
+                            <a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}">{{Str::words($job->title, 15)}}</a>
                         </th>
                         <td>{{$job->created_at->diffForHumans()}}</td>
                         <td>
@@ -31,6 +31,11 @@
                     @endforeach
                 </tbody>
               </table>
+
+              @if(!$jobs->count())
+              <x-jobs.nodata/>
+              @endif
+
               <div class="col-12 justify-content-end d-flex">
                 {{ $jobs->links() }}
               </div>

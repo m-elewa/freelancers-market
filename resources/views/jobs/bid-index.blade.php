@@ -21,10 +21,10 @@
                     @foreach ($bids as $bid)
                     <tr>
                         <th scope="row">
-                            <a href="{{ route('jobs.show', $bid->job->id) }}">{{Str::words($bid->job->title, 10)}}</a>
+                            <a href="{{ route('jobs.show', ['job' => $bid->job->id, 'title' => Str::slug($bid->job->title)]) }}">{{Str::words($bid->job->title, 10)}}</a>
                         </th>
                         <td>
-                          {{ Str::words($bid->description, 10) }}
+                          {{ Str::words(trim(strip_tags($bid->description)), 10) }}
                         </td>
                         <td>
                           {{  $bid->created_at->diffForHumans() }}
@@ -33,6 +33,11 @@
                     @endforeach
                 </tbody>
               </table>
+
+              @if(!$bids->count())
+              <x-jobs.nodata/>
+              @endif
+
               <div class="col-12 justify-content-end d-flex">
                 {{ $bids->links() }}
               </div>
