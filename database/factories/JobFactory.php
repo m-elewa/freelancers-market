@@ -9,8 +9,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Job::class, function (Faker $faker) {
     return [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraphs(3, true),
+        'title' => $faker->realText($faker->numberBetween(50,70)),
+        'description' => $faker->realText($faker->numberBetween(300,600)),
         'status_id' => Status::ACTIVE_STATUS,
+        'created_at' => $faker->dateTimeThisMonth(),
     ];
 });
