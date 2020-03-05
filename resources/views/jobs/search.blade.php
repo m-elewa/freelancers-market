@@ -13,17 +13,23 @@
             <div class="card my-2 shadow">
                 
             <div class="card-body">
-                <h5 class="card-title">{{Str::words($job->title, 10)}}</h5>
-                <p class="card-text">{{Str::words($job->description, 20)}}</p>
-                <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-primary">Submit a Proposal</a>
+                <h5 class="card-title">{{Str::words($job->title, 15)}}</h5>
+                <p class="card-text">{{Str::words(trim(strip_tags($job->description)), 30)}}</p>
             </div>
 
-            <div class="card-footer text-muted">
-                {{$job->created_at->diffForHumans()}}
+            <div class="card-footer text-muted d-flex justify-content-between">
+                <div>{{$job->created_at->diffForHumans()}}</div>
+                <div><a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}" class="btn btn-primary btn-sm stretched-link">Submit a Proposal</a></div>
             </div>
         </div>
     </div>
     @endforeach
+
+    @if(!$jobs->count())
+    <div class="col-12">
+    <x-jobs.nodata/>
+    </div>
+    @endif
 
     <div class="col-12 my-3">
         {{ $jobs->links() }}

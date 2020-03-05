@@ -3,13 +3,17 @@
 @section('css')
 @endsection
 
+@section('javascript')
+<x-jobs.textarea/>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-10">
             <h1 class="mb-3">Post a Project</h1>
         </div>
-        <div class="col-8">
+        <div class="col-10">
             <form method="POST" action="{{ route('jobs.store') }}">
                 @csrf
                 <div class="form-group">
@@ -28,7 +32,7 @@
                     <textarea name="description" class="form-control @error('description') is-invalid @enderror"
                         id="description" rows="3" required>{{ old('description') }}</textarea>
                     @error('description')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback" id="editor-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror

@@ -7,6 +7,7 @@ use App\Status;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBid;
 use App\Http\Requests\StoreJob;
+use Str;
 
 class JobController extends Controller
 {
@@ -41,9 +42,9 @@ class JobController extends Controller
     public function store(StoreJob $request)
     {
         $job = array_merge($request->all(), ['status_id' => Status::ACTIVE_STATUS]);
-        auth()->user()->jobs()->create($job);
+        $job = auth()->user()->jobs()->create($job);
 
-        return redirect(route('jobs.index'));
+        return redirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
     }
 
     /**
@@ -121,7 +122,7 @@ class JobController extends Controller
             ]);
         $job->bids()->create($bid);
 
-        return redirect(route('jobs.show', $job->id));
+        return redirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
     }
 
     /**

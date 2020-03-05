@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('head-title', $job->title)
+
 @section('css')
+@endsection
+
+@section('javascript')
+<x-jobs.textarea/>
 @endsection
 
 @section('content')
@@ -9,7 +14,7 @@
     <div class="row">
         <div class="col-12">
             <div class="jumbotron shadow">
-                <p class="lead">{{ $job->description }}</p>
+                <p class="lead">{!! $job->description !!}</p>
                 <hr class="my-4">
                 <p>{{ $job->created_at->diffForHumans() }}</p>
             </div>
@@ -70,16 +75,19 @@
                 @foreach ($bids as $bid)
                 <div class="card my-3 shadow-sm mx-3">
                     <div class="card-body">
-                        <h5 class="card-title">${{ $bid->amount }}</h5>
-                        <p class="card-text">{{ $bid->description }}</p>
-                        <a href="{{ route('jobs.show', $bid->id) }}" class="btn btn-primary">Show Upwork Profile</a>
+                        <p class="card-text">{!! $bid->description !!}</p>
                     </div>
-                    <div class="card-footer text-muted">
-                        {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}
+                    <div class="card-footer text-muted d-flex justify-content-between">
+                        <div><strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}</div>
+                        <div><a href="#" class="btn btn-primary btn-sm stretched-link">Show Upwork Profile</a></div>
                     </div>
                 </div>
 
                 @endforeach
+                
+                @if(!$bids->count())
+                <x-jobs.nodata/>
+                @endif
 
                 <div class="col-12 pt-3 justify-content-end d-flex">
                 {{ $bids->links() }}
@@ -95,13 +103,12 @@
                 <div class="card-header border-success">
                     Your bid on the job
                 </div>
-                <div class="card-body text-success">
-                    <h5 class="card-title">${{ $bid->amount }}</h5>
-                    <p class="card-text">{{ $bid->description }}</p>
-                    <a href="{{ route('jobs.show', $bid->id) }}" class="btn btn-primary">Show Upwork Profile</a>
+                <div class="card-body">
+                    <p class="card-text">{!! $bid->description !!}</p>
                 </div>
-                <div class="card-footer text-muted border-success">
-                    {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}
+                <div class="card-footer text-muted border-success d-flex justify-content-between">
+                    <div><strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}</div>
+                    <div><a href="#" class="btn btn-primary btn-sm stretched-link">Show Upwork Profile</a></div>
                 </div>
             </div>
 
