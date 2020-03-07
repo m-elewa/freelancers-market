@@ -1,9 +1,9 @@
 <?php
 
-use App\Job;
+use App\Bid;
 use Illuminate\Database\Seeder;
 
-class JobSeeder extends Seeder
+class BidSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class JobSeeder extends Seeder
      */
     public function run()
     {
-        factory(Job::class, 50)->create();
+        factory(Bid::class, 50)->create();
     }
 }

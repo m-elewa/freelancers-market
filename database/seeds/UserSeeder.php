@@ -15,9 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // create 30 users and 5 jobs for each one
+        // create 30 users and 8 jobs for each one
         factory(User::class, 30)->create()->each(function ($user) {
-            $user->jobs()->createMany(factory(Job::class, 8)->make()->toArray());
+            $user->jobs()->createMany(factory(Job::class, 8)->make(['user_id' => null])->toArray());
         });
 
         // create the default user
@@ -27,20 +27,18 @@ class UserSeeder extends Seeder
         ]);
 
         // create 20 bid for the default user
-        $jobs = Job::inRandomOrder()->take(20)->get();
-        foreach ($jobs as $job) {
-            factory(Bid::class)->create(['user_id' => $user->id, 'job_id' => $job->id]);
-        }
+        Job::inRandomOrder()->take(20)->get()->each(function ($job) use ($user) {
+            $user->bids()->create(factory(Bid::class)->make(['user_id' => null, 'job_id' => $job->id])->toArray());
+        });
 
         // create 30 jobs for the default user
-        $user->jobs()->createMany(factory(Job::class, 30)->make()->toArray());
+        $user->jobs()->createMany(factory(Job::class, 30)->make(['user_id' => null])->toArray());
 
-        // create 5 bids for each job
+        // create 8 bids for each job
         Job::all()->each(function ($job) use ($user) {
-            $users = User::where('id', '<>', $user->id)->inRandomOrder()->take(8)->get();
-            foreach ($users as $user) {
-                factory(Bid::class)->create(['user_id' => $user->id, 'job_id' => $job->id]);
-            }
+            User::where('id', '<>', $user->id)->inRandomOrder()->take(8)->get()->each(function ($user) use ($job) {
+                $user->bids()->create(factory(Bid::class)->make(['user_id' => null, 'job_id' => $job->id])->toArray());
+            });
         });
     }
 }
