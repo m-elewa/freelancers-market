@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\User;
 use Faker\Factory;
+use Tests\TestCase;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
@@ -15,32 +17,82 @@ class RegisterTest extends TestCase
     use WithFaker;
 
     /** @test */
-    public function user_can_see_register_page(): void
+    public function users_can_register_an_account()
     {
-        $uri = route('register');
+        $response = $this->post(route('register'), $this->validParams());
 
-        $response = $this->get($uri);
-        $response->assertSeeText('First name');
+        $response->assertRedirect(route('home'));
+
+        $this->assertTrue(Auth::check());
     }
 
     /** @test */
-    public function user_must_be_able_to_register(): void
+    public function email_is_required()
     {
-        $this->withoutExceptionHandling();
-        $uri = route('register');
+        $this->from(route('register'));
 
-        $response = $this->post($uri, $this->data());
-        $response->assertRedirect(route('home'));
+        $response = $this->post(route('register'), $this->validParams([
+            'email' => '',
+        ]));
+
+        $response->assertRedirect(route('register'));
+        $response->assertSessionHasErrors('email');
+        $this->assertFalse(Auth::check());
     }
 
-    public function data() {
+    /** @test */
+    public function email_is_valid()
+    {
+        $this->from(route('register'));
+
+        $response = $this->post(route('register'), $this->validParams([
+            'email' => 'not-an-email-address',
+        ]));
+
+        $response->assertRedirect(route('register'));
+        $response->assertSessionHasErrors('email');
+        $this->assertFalse(Auth::check());
+    }
+
+    /** @test */
+    public function email_cannot_exceed_255_chars()
+    {
+        $this->from(route('register'));
+
+        $response = $this->post(route('register'), $this->validParams([
+            'email' => substr(str_repeat('a', 256) . '@example.com', -256),
+        ]));
+
+        $response->assertRedirect(route('register'));
+        $response->assertSessionHasErrors('email');
+        $this->assertFalse(Auth::check());
+    }
+
+    /** @test */
+    public function email_is_unique()
+    {
+        $email = 'johndoe@example.com';
+        factory(User::class)->create(['email' => $email]);
+        $this->from(route('register'));
+
+        $response = $this->post(route('register'), $this->validParams([
+            'email' => $email,
+        ]));
+
+        $response->assertRedirect(route('register'));
+        $response->assertSessionHasErrors('email');
+        $this->assertFalse(Auth::check());
+        User::where('email', $email)->delete();
+    }
+
+    public function validParams($overrides = []) {
         $user = factory(User::class)->make();
-        return [
+        return array_merge([
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'email' => $user->email,
             'password' => 'password',
             'password_confirmation' => 'password',
-        ];
+        ], $overrides);
     }
 }

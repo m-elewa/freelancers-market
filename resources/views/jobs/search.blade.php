@@ -19,7 +19,7 @@
 
             <div class="card-footer text-muted d-flex justify-content-between">
                 <div>{{$job->created_at->diffForHumans()}}</div>
-                <div><a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}" class="btn btn-primary btn-sm stretched-link">Submit a Proposal</a></div>
+                <div><a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}" class="btn btn-primary btn-sm stretched-link">Job Details</a></div>
             </div>
         </div>
     </div>

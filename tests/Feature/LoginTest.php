@@ -2,31 +2,23 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\User;
+use Tests\TestCase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
 {
     // use RefreshDatabase;
 
     /** @test */
-    public function user_can_not_see_home_page_if_not_logged_in(): void
+    public function user_can_not_see_setting_page_if_not_logged_in(): void
     {
+        $this->assertGuest();
         $uri = route('setting.edit');
 
-        $response = $this->get($uri);
-        $response->assertRedirect(route('login'));
-    }
-
-    /** @test */
-    public function user_can_see_login_page(): void
-    {
-        $uri = route('login');
-
-        $response = $this->get($uri);
-        $response->assertSeeText('E-Mail Address');
+        $this->get($uri)->assertRedirect(route('login'));
     }
 
     /** @test */
@@ -39,12 +31,16 @@ class LoginTest extends TestCase
             'email' => $user->email,
         ]);
 
-        $response = $this->post($uri, [
+        $credentials = [
             'email' => $user->email, 
             'password' => 'wrong-password',
-        ]);
+        ];
 
-        $this->user_can_not_see_home_page_if_not_logged_in();
+        $this->assertInvalidCredentials($credentials);
+
+        $this->post($uri, $credentials);
+
+        $this->assertGuest();
     }
 
     /** @test */
@@ -57,6 +53,19 @@ class LoginTest extends TestCase
             'email' => $user->email, 
             'password' => 'password',
         ]);
+        $this->assertAuthenticated();
         $response->assertRedirect(route('home'));
+    }
+
+    /** @test */
+    public function user_should_be_able_to_logout()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)
+            ->post(route('logout'))
+            ->assertRedirect(route('home'));
+
+        $this->assertFalse($this->isAuthenticated());
     }
 }

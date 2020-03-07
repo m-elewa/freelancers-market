@@ -2,6 +2,11 @@
 
 namespace Tests;
 
+use App\Role;
+use App\User;
+use App\Exceptions\Handler;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -20,6 +25,9 @@ abstract class TestCase extends BaseTestCase
 
         // fresh && seed
         $this->migrate();
+
+        Schema::enableForeignKeyConstraints();
+        // $this->withoutExceptionHandling();
     }
 
     /**
@@ -36,5 +44,23 @@ abstract class TestCase extends BaseTestCase
         });
 
         TestCase::$migratedDatabase = true;
+    }
+
+    protected function signIn($user = null)
+    {
+        $user = $user ?: factory(User::class)->create();
+
+        $this->actingAs($user);
+
+        return $this;
+    }
+
+    protected function signInAdmin($admin = null)
+    {
+        $admin = $admin ?: factory(User::class)->create(['role_id' => Role::ADMIN_ROLE]);
+
+        $this->actingAs($admin);
+
+        return $this;
     }
 }

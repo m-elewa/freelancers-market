@@ -28,7 +28,8 @@ class UpdateProfile extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255', 'min:2'],
             'last_name' => ['required', 'string', 'max:255', 'min:2'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(auth()->id())]
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(auth()->id())],
+            'current_password' => ['required']
         ];
     }
 }
