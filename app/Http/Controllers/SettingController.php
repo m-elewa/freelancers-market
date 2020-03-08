@@ -33,7 +33,7 @@ class SettingController extends Controller
     {
         $this->checkPassword($request, 'current_password');
 
-        auth()->user()->update($request->all());
+        auth()->user()->update($request->validated());
         return redirect(route('setting.edit'));
     }
 

@@ -24,7 +24,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         // fresh && seed
-        $this->migrate();
+        // $this->migrate();
 
         Schema::enableForeignKeyConstraints();
         // $this->withoutExceptionHandling();

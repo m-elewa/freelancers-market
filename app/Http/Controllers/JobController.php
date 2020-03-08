@@ -40,7 +40,7 @@ class JobController extends Controller
      */
     public function store(StoreJob $request)
     {
-        $job = auth()->user()->jobs()->create($request->all());
+        $job = auth()->user()->jobs()->create($request->validated());
 
         return redirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
     }
@@ -114,7 +114,7 @@ class JobController extends Controller
      */
     public function storeBid(StoreBid $request, Job $job)
     {
-        $job->bids()->create($request->all() + ['user_id' => auth()->id()]);
+        $job->bids()->create($request->validated() + ['user_id' => auth()->id()]);
         
         return redirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
     }
