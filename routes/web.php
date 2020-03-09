@@ -30,4 +30,5 @@ Route::group(['prefix' => 'setting', 'as' => 'setting.', 'middleware' => 'auth']
     Route::get('', 'SettingController@edit')->name('edit');
     Route::post('', 'SettingController@update')->name('update');
     Route::post('password', 'SettingController@updatePassword')->name('update-password');
+    Route::post('update-upwork-profile-link', 'SettingController@updateUpworkLink')->name('update-upwork-profile');
 });

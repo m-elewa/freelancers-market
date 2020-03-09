@@ -11,13 +11,15 @@ class Job extends Model
 {
     use UuidModel;
 
+    const UPWORK_LINK = 'upwork.com/jobs/';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'status_id', 'user_id'
+        'title', 'description', 'status_id', 'user_id', 'upwork_job_link'
     ];
 
     protected $attributes = [
@@ -32,5 +34,10 @@ class Job extends Model
     public function bids(): hasMany
     {
         return $this->hasMany(Bid::class);
+    }
+
+    public function upworkLink(): string
+    {
+        return 'https://www.' . SELF::UPWORK_LINK . $this->upwork_job_link;
     }
 }

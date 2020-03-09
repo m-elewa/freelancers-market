@@ -13,6 +13,7 @@
                 <thead>
                   <tr>
                     <th scope="col">Title</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Date</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -21,11 +22,14 @@
                     @foreach ($jobs as $job)
                     <tr>
                         <th scope="row">
-                            <a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}">{{Str::words($job->title, 15)}}</a>
+                          <a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}">{{Str::words($job->title, 10)}}</a>
                         </th>
+                        <td>
+                          {{ Str::words(trim(strip_tags($job->description)), 10) }}
+                        </td>
                         <td>{{$job->created_at->diffForHumans()}}</td>
                         <td>
-                            <button type="button" class="btn btn-secondary btn-sm">Archive</button>
+                          <a href="{{ $job->upworkLink() }}" target="_blank" class="btn btn-primary btn-sm">Upwork Link</a>
                         </td>
                       </tr>
                     @endforeach

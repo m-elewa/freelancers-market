@@ -16,17 +16,20 @@
             <div class="jumbotron shadow">
                 <p class="lead">{!! $job->description !!}</p>
                 <hr class="my-4">
-                <p>{{ $job->created_at->diffForHumans() }}</p>
+                <div class="d-flex justify-content-between">
+                    <div><p>{{ $job->created_at->diffForHumans() }}</p></div>
+                    <div><a href="{{ $job->upworkLink() }}" target="_blank" class="btn btn-primary">Upwork Link</a></div>
+                </div>
             </div>
         </div>
 
         @can('create-bid', $job)
         <div class="col-12">
             <div class="card my-4 shadow">
+                @if(Auth::user()->upwork_profile_link)
                 <h5 class="card-header">Place a Bid on this Project</h5>
                 <div class="card-body">
                     <h5 class="card-title">Bid Details</h5>
-
 
                     <form method="POST" action="{{ route('jobs.store-bid', $job->id) }}">
                         @csrf
@@ -56,8 +59,39 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
 
+                </div>
+                @else
+
+                <div class="card-body">
+                    <h5 class="card-title">Add upwork profile link</h5>
+
+                    <form method="POST" action="{{ route('setting.update-upwork-profile') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="upwork_profile_link">You have to add your upwork profile link first to add bids. You can edit it later from <a href="{{ route('setting.edit') }}">your setting page.</a></label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">{{ App\User::UPWORK_LINK }}</div>
+                                </div>
+
+                                <input name="upwork_profile_link" type="text"
+                                    class="form-control @error('upwork_profile_link') is-invalid @enderror" value="{{ old('upwork_profile_link') }}"
+                                    id="upwork_profile_link" required>
+                            </div>
+
+                            @error('upwork_profile_link')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
 
                 </div>
+                @endif
             </div>
         </div>
         @endcan
@@ -78,8 +112,11 @@
                         <p class="card-text">{!! $bid->description !!}</p>
                     </div>
                     <div class="card-footer text-muted d-flex justify-content-between">
-                        <div><strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}</div>
-                        <div><a href="#" class="btn btn-primary btn-sm stretched-link">Show Upwork Profile</a></div>
+                        <div>
+                            <strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}
+                            @if(!$bid->user->upwork_profile_link) | <span class="badge badge-danger">Invalid upwork profile link</span>@endif
+                        </div>
+                        <div><a href="{{ $bid->user->upworkLink() }}" class="btn btn-primary btn-sm stretched-link" target="_blank">Show Upwork Profile</a></div>
                     </div>
                 </div>
 
@@ -107,8 +144,11 @@
                     <p class="card-text">{!! $bid->description !!}</p>
                 </div>
                 <div class="card-footer text-muted border-success d-flex justify-content-between">
-                    <div><strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}</div>
-                    <div><a href="#" class="btn btn-primary btn-sm stretched-link">Show Upwork Profile</a></div>
+                    <div>
+                        <strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} | {{ $bid->created_at->diffForHumans() }}
+                        @if(!$bid->user->upwork_profile_link) | <span class="badge badge-danger">Invalid upwork profile link</span>@endif
+                    </div>
+                    <div><a href="{{ $bid->user->upworkLink() }}" class="btn btn-primary btn-sm stretched-link" target="_blank">Show Upwork Profile</a></div>
                 </div>
             </div>
 

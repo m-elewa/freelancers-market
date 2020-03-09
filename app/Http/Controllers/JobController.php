@@ -17,7 +17,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = auth()->user()->jobs()->latest()->paginate(5);
+        $jobs = auth()->user()->jobs()->latest()->paginate(10);
 
         return view('jobs.index', compact('jobs'));
     }
@@ -40,7 +40,10 @@ class JobController extends Controller
      */
     public function store(StoreJob $request)
     {
-        $job = auth()->user()->jobs()->create($request->validated());
+        $job = auth()->user()->jobs()->create(array_merge(
+            $request->validated(), 
+            ['upwork_job_link' => $this->validateUpworkLink($request->upwork_job_link)]
+        ));
 
         return redirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
     }
@@ -55,7 +58,7 @@ class JobController extends Controller
     {
         return view('jobs.show', [
                 'job' => $job,
-                'bids' => $job->bids()->latest()->paginate(5),
+                'bids' => $job->bids()->latest()->paginate(10),
                 'bid' => $job->bids()->freelancerBid()
              ]);
     }
@@ -126,7 +129,7 @@ class JobController extends Controller
      */
     public function bidsIndex()
     {
-        $bids = auth()->user()->bids()->latest()->paginate(5);
+        $bids = auth()->user()->bids()->latest()->paginate(10);
 
         return view('jobs.bid-index', compact('bids'));
     }

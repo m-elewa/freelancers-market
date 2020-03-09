@@ -13,13 +13,16 @@
             <div class="card my-2 shadow">
                 
             <div class="card-body">
-                <h5 class="card-title">{{Str::words($job->title, 15)}}</h5>
+                <a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}"><h5 class="card-title">{{Str::words($job->title, 15)}}</h5></a>
                 <p class="card-text">{{Str::words(trim(strip_tags($job->description)), 30)}}</p>
             </div>
 
             <div class="card-footer text-muted d-flex justify-content-between">
                 <div>{{$job->created_at->diffForHumans()}}</div>
-                <div><a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}" class="btn btn-primary btn-sm stretched-link">Job Details</a></div>
+                <div>
+                    <a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}" class="btn btn-primary btn-sm">Job Details</a>
+                    <a href="{{ $job->upworkLink() }}" target="_blank" class="btn btn-primary btn-sm">Upwork Link</a>
+                </div>
             </div>
         </div>
     </div>

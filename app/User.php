@@ -12,13 +12,15 @@ class User extends Authenticatable
 {
     use Notifiable, UuidModel;
 
+    const UPWORK_LINK = 'upwork.com/freelancers/';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'password', 'role_id', 'status_id', 'email'
+        'first_name', 'last_name', 'password', 'role_id', 'status_id', 'email', 'upwork_profile_link'
     ];
 
     /**
@@ -66,5 +68,10 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role_id === Role::ADMIN_ROLE;
+    }
+
+    public function upworkLink(): string
+    {
+        return 'https://www.' . SELF::UPWORK_LINK . $this->upwork_profile_link;
     }
 }

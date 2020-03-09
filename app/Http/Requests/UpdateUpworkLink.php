@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreJob extends FormRequest
+class UpdateUpworkLink extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,7 @@ class StoreJob extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return !auth()->user()->upwork_profile_link;
     }
 
     /**
@@ -25,9 +26,7 @@ class StoreJob extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
-            'description' => 'required|max:1000',
-            'upwork_project_link' => ['required', 'string', 'max:255', Rule::unique('jobs')],
+            'upwork_profile_link' => ['required', 'string', 'max:255', Rule::unique('users')->ignore(auth()->id())],
         ];
     }
 }

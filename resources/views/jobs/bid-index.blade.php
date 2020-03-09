@@ -15,6 +15,7 @@
                     <th scope="col">Job Title</th>
                     <th scope="col">Bid Description</th>
                     <th scope="col">Bid Date</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,9 @@
                         </td>
                         <td>
                           {{  $bid->created_at->diffForHumans() }}
+                        </td>
+                        <td>
+                          <a href="{{ $bid->job->upworkLink() }}" target="_blank" class="btn btn-primary btn-sm">Upwork Link</a>
                         </td>
                       </tr>
                     @endforeach

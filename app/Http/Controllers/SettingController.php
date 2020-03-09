@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Job;
+use Validator;
 use App\Status;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreJob;
 use App\Http\Requests\UpdateProfile;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdatePassword;
-use Validator;
+use App\Http\Requests\UpdateUpworkLink;
+use Str;
+use Illuminate\Http\RedirectResponse;
 
 class SettingController extends Controller
 {
@@ -31,9 +34,14 @@ class SettingController extends Controller
      */
     public function update(UpdateProfile $request)
     {
-        $this->checkPassword($request, 'current_password');
+        if($v = $this->checkPassword($request, 'current_password')) {
+            return back()->withInput()->withErrors($v);
+        }
 
-        auth()->user()->update($request->validated());
+        auth()->user()->update(array_merge(
+            $request->validated(), 
+            ['upwork_profile_link' => $this->validateUpworkLink($request->upwork_profile_link)]
+        ));
         return redirect(route('setting.edit'));
     }
 
@@ -45,7 +53,9 @@ class SettingController extends Controller
      */
     public function updatePassword(UpdatePassword $request)
     {
-        $this->checkPassword($request, 'current_password_modal');
+        if($v = $this->checkPassword($request, 'current_password_modal')) {
+            return back()->withInput()->withErrors($v);
+        }
 
         auth()->user()->update(['password' => bcrypt($request->password)]);
         return redirect(route('setting.edit'));
@@ -54,8 +64,22 @@ class SettingController extends Controller
     public function checkPassword($request, $field) {
         if(!Hash::check($request->get($field), auth()->user()->password)) {
             $v = Validator::make([], []);
-            $v->getMessageBag()->add($field, 'Wrong Password!');
-            return back()->withInput()->withErrors($v);
+            return $v->getMessageBag()->add($field, 'Wrong Password!');
         }
+
+        return null;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateUpworkLink(UpdateUpworkLink $request)
+    {
+        $upworkLink = $this->validateUpworkLink($request->upwork_profile_link);
+        auth()->user()->update(['upwork_profile_link' => $upworkLink]);
+        return back();
     }
 }

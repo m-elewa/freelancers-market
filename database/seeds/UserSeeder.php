@@ -34,9 +34,9 @@ class UserSeeder extends Seeder
         // create 30 jobs for the default user
         $user->jobs()->createMany(factory(Job::class, 30)->make(['user_id' => null])->toArray());
 
-        // create 8 bids for each job
+        // create 12 bids for each job
         Job::all()->each(function ($job) use ($user) {
-            User::where('id', '<>', $user->id)->inRandomOrder()->take(8)->get()->each(function ($user) use ($job) {
+            User::where('id', '<>', $user->id)->inRandomOrder()->take(12)->get()->each(function ($user) use ($job) {
                 $user->bids()->create(factory(Bid::class)->make(['user_id' => null, 'job_id' => $job->id])->toArray());
             });
         });

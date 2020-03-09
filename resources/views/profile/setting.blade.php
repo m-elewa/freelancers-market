@@ -16,7 +16,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="first_name" class="col-md-4 col-form-label text-md-right">First name</label>
+                            <label for="first_name" class="col-md-4 col-form-label text-md-right">First Name</label>
 
                             <div class="col-md-6">
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" 
@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="last_name" class="col-md-4 col-form-label text-md-right">Last name</label>
+                            <label for="last_name" class="col-md-4 col-form-label text-md-right">Last Name</label>
 
                             <div class="col-md-6">
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" 
@@ -53,6 +53,25 @@
                                 value="{{ old('email', Auth::user()->email) }}" required autocomplete="email">
 
                                 @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="upwork_profile_link" class="col-md-4 col-form-label text-md-right">Upwork Profile Link</label>
+
+                            <div class="col-md-6 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">{{ App\User::UPWORK_LINK }}</div>
+                                </div>
+
+                                <input id="upwork_profile_link" type="text" class="form-control @error('upwork_profile_link') is-invalid @enderror" name="upwork_profile_link" 
+                                value="{{ old('upwork_profile_link', Auth::user()->upwork_profile_link) }}">
+
+                                @error('upwork_profile_link')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -28,6 +28,25 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="title">Upwork Job Link</label>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text">{{ App\Job::UPWORK_LINK }}</div>
+                        </div>
+
+                        <input name="upwork_job_link" type="text"
+                            class="form-control @error('upwork_job_link') is-invalid @enderror" value="{{ old('upwork_job_link') }}"
+                            id="upwork_job_link" required>
+                    </div>
+                    @error('upwork_job_link')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="description">Description</label>
                     <textarea name="description" class="form-control @error('description') is-invalid @enderror"
                         id="description" rows="3" required>{{ old('description') }}</textarea>

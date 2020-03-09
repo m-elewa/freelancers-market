@@ -19,6 +19,7 @@ class CreateJobsTable extends Migration
             $table->uuid('user_id');
             $table->unsignedBigInteger('status_id');
             $table->text('title');
+            $table->string('upwork_job_link')->unique();
             $table->text('description');
             $table->timestamps();
             $table->softDeletes();
@@ -26,6 +27,7 @@ class CreateJobsTable extends Migration
             # Constrains
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('status_id')->references('id')->on('statuses');
+            $table->index(['upwork_job_link']);
         });
     }
 
