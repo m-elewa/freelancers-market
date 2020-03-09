@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('head-title', 'Post a Project')
+@section('title', 'Post a Project')
 @section('css')
 @endsection
 
