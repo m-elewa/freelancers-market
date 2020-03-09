@@ -38,7 +38,8 @@ class LoginTest extends TestCase
 
         $this->assertInvalidCredentials($credentials);
 
-        $this->post($uri, $credentials);
+        $response = $this->post($uri, $credentials);
+        $response->assertSessionHasErrors('email');
 
         $this->assertGuest();
 
@@ -55,6 +56,7 @@ class LoginTest extends TestCase
             'email' => $user->email, 
             'password' => 'password',
         ]);
+        $response->assertSessionHasNoErrors();
         $this->assertAuthenticated();
         $response->assertRedirect(route('home'));
 

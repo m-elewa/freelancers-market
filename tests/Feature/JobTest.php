@@ -65,6 +65,7 @@ class JobTest extends TestCase
         $job = factory(Job::class)->make(['user_id' => null]);
 
         $response = $this->post($uri, $job->toArray());
+        $response->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('jobs', $job->only(['description', 'title', 'upwork_job_link']));
         $job = Job::latest()->first();
@@ -83,6 +84,7 @@ class JobTest extends TestCase
         $bid = factory(Bid::class)->make(['user_id' => null, 'job_id' => null]);
 
         $response = $this->post($uri, $bid->only(['description', 'amount']));
+        $response->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('bids', $bid->only(['description', 'amount']) + ['job_id' => $job->id, 'user_id' => auth()->id()]);
 

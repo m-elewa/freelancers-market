@@ -20,9 +20,9 @@ class RegisterTest extends TestCase
     public function users_can_register_an_account()
     {
         $response = $this->post(route('register'), $this->validParams());
+        $response->assertSessionHasNoErrors();
 
         $response->assertRedirect(route('home'));
-
         $this->assertTrue(Auth::check());
 
         auth()->user()->delete();

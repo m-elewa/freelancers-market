@@ -82,8 +82,6 @@ class SettingTest extends TestCase
         $uri = route('setting.update-upwork-profile');
         $user = factory(User::class)->make();
 
-        // auth()->user()->update(['upwork_profile_link' => '']);
-
         $response = $this->post($uri, [
             'upwork_profile_link' => $user->upwork_profile_link,
         ]);
@@ -102,7 +100,8 @@ class SettingTest extends TestCase
         $response = $this->post($uri, [
             'upwork_profile_link' => $user->upwork_profile_link,
         ]);
-        $this->assertEquals(Auth()->user()->fresh()->upwork_profile_link, $user->upwork_profile_link);
+        $response->assertSessionHasNoErrors();
+        $this->assertEquals(Auth()->user()->upwork_profile_link, $user->upwork_profile_link);
         $response->assertRedirect();
     }
 

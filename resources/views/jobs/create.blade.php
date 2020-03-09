@@ -32,7 +32,7 @@
 
                     <div class="input-group">
                         <div class="input-group-prepend">
-                        <div class="input-group-text">{{ App\Job::UPWORK_LINK }}</div>
+                            <div class="input-group-text">{{ App\Job::UPWORK_LINK }}</div>
                         </div>
 
                         <input name="upwork_job_link" type="text"
