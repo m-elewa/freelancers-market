@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('head-title', $job->title)
+@section('title', $job->title)
 
 @section('css')
 @endsection
@@ -17,7 +17,7 @@
                 <p class="lead">{!! $job->description !!}</p>
                 <hr class="my-4">
                 <div class="d-flex justify-content-between">
-                    <div><p>{{ $job->created_at->diffForHumans() }}</p></div>
+                <div><p>{{ $job->created_at->diffForHumans() }} | {{ $job->bids_count }} {{ Str::plural('bid', $job->bids_count) }}</p></div>
                     <div><a href="{{ $job->upworkLink() }}" target="_blank" class="btn btn-primary">Upwork Link</a></div>
                 </div>
             </div>

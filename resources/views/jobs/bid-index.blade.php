@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('head-title', 'My Bids')
+@section('title', 'My Bids')
 @section('css')
 @endsection
 
@@ -13,7 +13,7 @@
                 <thead>
                   <tr>
                     <th scope="col">Job Title</th>
-                    <th scope="col">Bid Description</th>
+                    <th scope="col">Bids Count</th>
                     <th scope="col">Bid Date</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -22,10 +22,10 @@
                     @foreach ($bids as $bid)
                     <tr>
                         <th scope="row">
-                            <a href="{{ route('jobs.show', ['job' => $bid->job->id, 'title' => Str::slug($bid->job->title)]) }}">{{Str::words($bid->job->title, 10)}}</a>
+                            <a href="{{ route('jobs.show', ['job' => $bid->job->id, 'title' => Str::slug($bid->job->title)]) }}">{{Str::words($bid->job->title, 15)}}</a>
                         </th>
                         <td>
-                          {{ Str::words(trim(strip_tags($bid->description)), 10) }}
+                          {{ $bid->job->bids_count }} {{ Str::plural('bid', $bid->job->bids_count) }}
                         </td>
                         <td>
                           {{  $bid->created_at->diffForHumans() }}

@@ -13,6 +13,8 @@ class Job extends Model
 
     const UPWORK_LINK = 'upwork.com/jobs/';
 
+    protected $withCount = ['bids'];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('head-title', 'Find Work')
+@section('title', 'Find Work')
 @section('css')
 @endsection
 
@@ -18,7 +18,7 @@
             </div>
 
             <div class="card-footer text-muted d-flex justify-content-between">
-                <div>{{$job->created_at->diffForHumans()}}</div>
+            <div>{{$job->created_at->diffForHumans()}} | {{ $job->bids_count }} {{ Str::plural('bid', $job->bids_count) }}</div>
                 <div>
                     <a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}" class="btn btn-primary btn-sm">Job Details</a>
                     <a href="{{ $job->upworkLink() }}" target="_blank" class="btn btn-primary btn-sm">Upwork Link</a>
