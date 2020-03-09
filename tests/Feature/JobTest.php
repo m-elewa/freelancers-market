@@ -64,10 +64,14 @@ class JobTest extends TestCase
         $uri = route('jobs.store');
         $job = factory(Job::class)->make(['user_id' => null]);
 
-        $response = $this->post($uri, $job->only(['title', 'description']));
+        $response = $this->post($uri, $job->toArray());
+
+        $this->assertDatabaseHas('jobs', $job->only(['description', 'title', 'upwork_job_link']));
         $job = Job::latest()->first();
 
         $response->assertRedirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
+
+        $job->delete();
     }
 
     /** @test */
@@ -80,7 +84,11 @@ class JobTest extends TestCase
 
         $response = $this->post($uri, $bid->only(['description', 'amount']));
 
+        $this->assertDatabaseHas('bids', $bid->only(['description', 'amount']) + ['job_id' => $job->id, 'user_id' => auth()->id()]);
+
         $response->assertRedirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
+        
+        $job->bids()->latest()->first()->delete();
     }
 
     /** @test */
@@ -93,5 +101,19 @@ class JobTest extends TestCase
 
         $response = $this->get($uri);
         $response->assertOk();
+
+        $job->delete();
+        $user->delete();
+    }
+
+    /**
+     * Clean up the testing environment before the next test.
+     *
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        auth()->user()->delete();
+        parent::tearDown();
     }
 }

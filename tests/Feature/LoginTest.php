@@ -41,6 +41,8 @@ class LoginTest extends TestCase
         $this->post($uri, $credentials);
 
         $this->assertGuest();
+
+        $user->delete();
     }
 
     /** @test */
@@ -55,6 +57,8 @@ class LoginTest extends TestCase
         ]);
         $this->assertAuthenticated();
         $response->assertRedirect(route('home'));
+
+        auth()->user()->delete();
     }
 
     /** @test */
@@ -67,5 +71,6 @@ class LoginTest extends TestCase
             ->assertRedirect(route('home'));
 
         $this->assertFalse($this->isAuthenticated());
+        $user->delete();
     }
 }

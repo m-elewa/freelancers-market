@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SttingTest extends TestCase
+class SettingTest extends TestCase
 {
     // use RefreshDatabase;
 
@@ -32,10 +32,14 @@ class SttingTest extends TestCase
     public function user_can_update_his_setting(): void
     {
         $uri = route('setting.update');
-        $job = factory(User::class)->make(['user_id' => null]);
+        $user = factory(User::class)->make();
 
-        $response = $this->post($uri, $job->only(['first_name', 'last_name', 'email']) + ['current_password' => 'password']);
+        $response = $this->post($uri, $user->toArray() + ['current_password' => 'password']);
         $response->assertSessionHasNoErrors();
+
+        $this->assertEquals(Auth()->user()->upwork_profile_link, $user->upwork_profile_link);
+        $this->assertEquals(Auth()->user()->email, $user->email);
+
         $response->assertRedirect(route('setting.edit'));
     }
 
@@ -66,9 +70,50 @@ class SttingTest extends TestCase
             'current_password_modal' => 'wrong-password',
         ]);
 
-        $this->assertFalse(Hash::check('password2', auth()->user()->password));
+        $this->assertFalse(Hash::check('password3', auth()->user()->password));
         $response->assertSessionHasErrors(['current_password_modal']);
 
-        $response->assertRedirect(route('setting.edit'));
+        $response->assertRedirect(route('home'));
+    }
+    
+    /** @test */
+    public function user_can_not_update_his_upwork_profile_link_from_job_page_if_not_empty(): void
+    {
+        $uri = route('setting.update-upwork-profile');
+        $user = factory(User::class)->make();
+
+        // auth()->user()->update(['upwork_profile_link' => '']);
+
+        $response = $this->post($uri, [
+            'upwork_profile_link' => $user->upwork_profile_link,
+        ]);
+        $this->assertNotEquals(Auth()->user()->upwork_profile_link, $user->upwork_profile_link);
+        $response->assertStatus(403);
+    }
+    
+    /** @test */
+    public function user_can_update_his_upwork_profile_link_from_job_page_if_empty(): void
+    {
+        $uri = route('setting.update-upwork-profile');
+        $user = factory(User::class)->make();
+
+        auth()->user()->update(['upwork_profile_link' => '']);
+
+        $response = $this->post($uri, [
+            'upwork_profile_link' => $user->upwork_profile_link,
+        ]);
+        $this->assertEquals(Auth()->user()->fresh()->upwork_profile_link, $user->upwork_profile_link);
+        $response->assertRedirect();
+    }
+
+    /**
+     * Clean up the testing environment before the next test.
+     *
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        auth()->user()->delete();
+        parent::tearDown();
     }
 }

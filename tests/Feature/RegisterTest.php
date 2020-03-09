@@ -24,6 +24,8 @@ class RegisterTest extends TestCase
         $response->assertRedirect(route('home'));
 
         $this->assertTrue(Auth::check());
+
+        auth()->user()->delete();
     }
 
     /** @test */
@@ -72,7 +74,7 @@ class RegisterTest extends TestCase
     public function email_is_unique()
     {
         $email = 'johndoe@example.com';
-        factory(User::class)->create(['email' => $email]);
+        $user = factory(User::class)->create(['email' => $email]);
         $this->from(route('register'));
 
         $response = $this->post(route('register'), $this->validParams([
@@ -82,17 +84,6 @@ class RegisterTest extends TestCase
         $response->assertRedirect(route('register'));
         $response->assertSessionHasErrors('email');
         $this->assertFalse(Auth::check());
-        User::where('email', $email)->delete();
-    }
-
-    public function validParams($overrides = []) {
-        $user = factory(User::class)->make();
-        return array_merge([
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
-            'email' => $user->email,
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ], $overrides);
+        $user->delete();
     }
 }

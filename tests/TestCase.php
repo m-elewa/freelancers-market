@@ -25,9 +25,6 @@ abstract class TestCase extends BaseTestCase
 
         // fresh && seed
         // $this->migrate();
-
-        Schema::enableForeignKeyConstraints();
-        // $this->withoutExceptionHandling();
     }
 
     /**
@@ -62,5 +59,23 @@ abstract class TestCase extends BaseTestCase
         $this->actingAs($admin);
 
         return $this;
+    }
+
+    /**
+     * generate user data array
+     * 
+     * @param  array  $overrides
+     * @return array
+     */
+    public function validParams($overrides = []): array
+    {
+        $user = factory(User::class)->make()->toArray();
+        
+        return array_merge(
+            array_merge([
+                'password' => 'password',
+                'password_confirmation' => 'password',
+            ], $user), 
+            $overrides);
     }
 }
