@@ -11,6 +11,7 @@
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^7.0",
+        "laravel/scout": "^8.0",
         "laravel/tinker": "^2.0",
         "webpatser/laravel-uuid": "^3.0"
     },
