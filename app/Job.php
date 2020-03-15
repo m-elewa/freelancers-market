@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Traits\Models\UuidModel;
+use Laravel\Scout\Searchable;
 
 class Job extends Model
 {
-    use UuidModel;
+    use UuidModel, Searchable;
 
     const UPWORK_LINK = 'upwork.com/jobs/';
 

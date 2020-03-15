@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use App\Job;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBid;
 use App\Http\Requests\StoreJob;
-use Str;
+use App\Http\Requests\SearchJob;
 
 class JobController extends Controller
 {
@@ -102,9 +103,13 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(SearchJob $request)
     {
-        $jobs = Job::latest()->paginate(10);
+        if ($request->q) {
+            $jobs = Job::search($request->q)->paginate(10);
+        } else {
+            $jobs = Job::latest()->paginate(10);
+        }
 
         return view('jobs.search', compact('jobs'));
     }

@@ -15,10 +15,10 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 // auth
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 // jobs
-Route::get('jobs/search', 'JobController@search')->name('jobs.search')->middleware('auth');
+Route::get('jobs/search', 'JobController@search')->name('jobs.search')->middleware(['auth']);
 Route::get('jobs/bid', 'JobController@bidsIndex')->name('jobs.bid-index')->middleware('auth');
 Route::post('jobs/{job}/create-bid', 'JobController@storeBid')->name('jobs.store-bid')->middleware('auth');
 Route::resource('jobs', 'JobController')->except(['edit', 'update', 'destroy', 'show'])->middleware('auth');

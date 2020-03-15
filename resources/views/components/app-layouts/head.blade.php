@@ -21,4 +21,7 @@
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+<!-- CSRF -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 @yield('css')

@@ -6,6 +6,27 @@
 @section('content')
 <div class="container">
     <h1 class="mb-3">Find Work</h1>
+
+    <div class="row my-3">
+        <form class="col-12" method="GET" action="{{ route('jobs.search') }}">
+            <div class="form-row justify-content-center">
+              <div class="col-5">
+                <label class="sr-only" for="search">Search</label>
+                <input type="text" name="q" class="form-control mb-2 @error('q') is-invalid @enderror" value="{{ old('q', request('q')) }}" id="search" placeholder="Search For Jobs">
+                @error('q')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+              </div>
+
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+        </form>
+    </div>
+
     <div class="row">
 
         @foreach ($jobs as $job)
@@ -35,7 +56,7 @@
     @endif
 
     <div class="col-12 my-3">
-        {{ $jobs->links() }}
+        {{ $jobs->withQueryString()->links() }}
     </div>
     
 

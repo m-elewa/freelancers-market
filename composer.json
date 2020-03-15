@@ -9,10 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "algolia/algoliasearch-client-php": "^2.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^7.0",
+        "laravel/horizon": "^4.0",
         "laravel/scout": "^8.0",
         "laravel/tinker": "^2.0",
+        "teamtnt/laravel-scout-tntsearch-driver": "^8.1",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
