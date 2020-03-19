@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -31,7 +31,7 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 <li class="nav-item">
-                    <a class="btn btn-success mx-2 d-none d-md-block" href="{{ route('jobs.create') }}">Post a Project</a>
+                    <a class="btn btn-outline-success mx-2 d-none d-lg-block shadow-sm" href="{{ route('jobs.create') }}">Post a Project</a>
                 </li>
                 @guest
                     <li class="nav-item">
@@ -45,7 +45,7 @@
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name() }} <span class="caret"></span>
+                            {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -63,6 +63,7 @@
                             </form>
                         </div>
                     </li>
+                    <x-app-layouts.notifications/>
                 @endguest
             </ul>
         </div>

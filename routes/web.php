@@ -18,17 +18,25 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes(['verify' => true]);
 
 // jobs
-Route::get('jobs/search', 'JobController@search')->name('jobs.search')->middleware(['auth']);
-Route::get('jobs/bid', 'JobController@bidsIndex')->name('jobs.bid-index')->middleware('auth');
-Route::post('jobs/{job}/create-bid', 'JobController@storeBid')->name('jobs.store-bid')->middleware('auth');
-Route::resource('jobs', 'JobController')->except(['edit', 'update', 'destroy', 'show'])->middleware('auth');
-Route::get('jobs/{job}/{title?}', 'JobController@show')->name('jobs.show')->middleware('auth');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('jobs/search', 'JobController@search')->name('jobs.search');
+    Route::get('jobs/bid', 'JobController@bidsIndex')->name('jobs.bid-index');
+    Route::post('jobs/{job}/create-bid', 'JobController@storeBid')->name('jobs.store-bid');
+    Route::resource('jobs', 'JobController')->except(['edit', 'update', 'destroy', 'show']);
+    Route::get('jobs/{job}/{title?}', 'JobController@show')->name('jobs.show');
 
 
-// setting
-Route::group(['prefix' => 'setting', 'as' => 'setting.', 'middleware' => 'auth'], function() {
-    Route::get('', 'SettingController@edit')->name('edit');
-    Route::post('', 'SettingController@update')->name('update');
-    Route::post('password', 'SettingController@updatePassword')->name('update-password');
-    Route::post('update-upwork-profile-link', 'SettingController@updateUpworkLink')->name('update-upwork-profile');
+    // setting
+    Route::group(['prefix' => 'setting', 'as' => 'setting.'], function() {
+        Route::get('', 'SettingController@edit')->name('edit');
+        Route::post('', 'SettingController@update')->name('update');
+        Route::post('password', 'SettingController@updatePassword')->name('update-password');
+        Route::post('update-upwork-profile-link', 'SettingController@updateUpworkLink')->name('update-upwork-profile');
+    });
+
+    // notifications
+    Route::group(['prefix' => 'notifications', 'as' => 'notifications.'], function() {
+        Route::get('', 'NotificationController@index')->name('index');
+        Route::get('mark-all-notifications-as-read', 'NotificationController@markAllAsRead')->name('mark-all-as-read');
+    });
 });
