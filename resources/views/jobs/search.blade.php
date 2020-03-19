@@ -5,31 +5,33 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-3">Find Work</h1>
-
-    <div class="row my-3">
-        <form class="col-12" method="GET" action="{{ route('jobs.search') }}">
-            <div class="form-row justify-content-center">
-              <div class="col-5">
-                <label class="sr-only" for="search">Search</label>
-                <input type="text" name="q" class="form-control mb-2 @error('q') is-invalid @enderror" value="{{ old('q', request('q')) }}" id="search" placeholder="Search For Jobs">
-                @error('q')
+    <div class="row d-flex justify-content-between">
+        <div class="col-auto">
+            <h1 class="mb-3">Find Work</h1>
+        </div>
+    
+        <form class="col-lg-6 col-md-12" method="GET" action="{{ route('jobs.search') }}">
+            <div class="justify-content-lg-end mb-2">
+                
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control @error('q') is-invalid @enderror" value="{{ old('q', request('q')) }}" placeholder="Search For Jobs">
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-outline-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                    @error('q')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-              </div>
+                </div>
 
-              <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search"></i></button>
-              </div>
             </div>
         </form>
     </div>
 
     <div class="row">
 
-        @foreach ($jobs as $job)
+        @forelse ($jobs as $job)
         <div class="col-12">
             <div class="card my-2 shadow">
                 
@@ -47,13 +49,11 @@
             </div>
         </div>
     </div>
-    @endforeach
-
-    @if(!$jobs->count())
+    @empty
     <div class="col-12">
-    <x-jobs.nodata/>
+        <x-jobs.nodata/>
     </div>
-    @endif
+    @endforelse
 
     <div class="col-12 my-3">
         {{ $jobs->withQueryString()->links() }}

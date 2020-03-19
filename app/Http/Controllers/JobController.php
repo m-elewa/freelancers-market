@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Str;
 use App\Job;
+use App\Events\BidPosted;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBid;
 use App\Http\Requests\StoreJob;
@@ -59,7 +60,7 @@ class JobController extends Controller
     {
         return view('jobs.show', [
                 'job' => $job,
-                'bids' => $job->bids()->latest()->paginate(10),
+                'bids' => $job->bids()->with('user')->latest()->paginate(10),
                 'bid' => $job->bids()->freelancerBid()
              ]);
     }
@@ -115,6 +116,7 @@ class JobController extends Controller
     }
 
     /**
+     * TODO: test
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -122,7 +124,12 @@ class JobController extends Controller
      */
     public function storeBid(StoreBid $request, Job $job)
     {
-        $job->bids()->create($request->validated() + ['user_id' => auth()->id()]);
+        $bid = $job->bids()->create($request->validated() + ['user_id' => auth()->id()]);
+
+        if ($bid) {
+            $bid->load('user');
+            event(new BidPosted($bid));
+        }
         
         return redirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
     }
@@ -134,7 +141,7 @@ class JobController extends Controller
      */
     public function bidsIndex()
     {
-        $bids = auth()->user()->bids()->latest()->paginate(10);
+        $bids = auth()->user()->bids()->with('job')->latest()->paginate(10);
 
         return view('jobs.bid-index', compact('bids'));
     }

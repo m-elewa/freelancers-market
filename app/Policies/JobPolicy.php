@@ -120,7 +120,7 @@ class JobPolicy
      */
     public function createBid(User $user, Job $job)
     {
-        return $user->id !== $job->user_id && !$job->bids()->freelancerBid()->count();
+        return $user->id !== $job->user_id;
     }
 
     /**

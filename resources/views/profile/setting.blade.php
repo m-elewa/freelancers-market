@@ -95,10 +95,10 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary shadow">
                                     Update
                                 </button>
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changepass">
+                                <button type="button" class="btn btn-warning shadow" data-toggle="modal" data-target="#changepass">
                                     Change Password
                                   </button>
                             </div>
