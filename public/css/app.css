@@ -16821,3 +16821,84 @@ a.text-dark:focus {
   }
 }
 
+#notifications-dropdown .nav-pills .nav-link.active,
+#notifications-dropdown .nav-pills .show > .nav-link {
+  background-color: #17A2B8;
+}
+
+#notifications-dropdown .dropdown-menu {
+  top: 60px;
+  right: 0px;
+  left: unset;
+  width: 460px;
+  box-shadow: 0px 5px 7px -1px #c1c1c1;
+  padding-bottom: 0px;
+  padding: 0px;
+}
+
+#notifications-dropdown .head {
+  padding: 5px 15px;
+  border-radius: 3px 3px 0px 0px;
+}
+
+#notifications-dropdown .footer {
+  padding: 5px 15px;
+  border-radius: 0px 0px 3px 3px;
+}
+
+#notifications-dropdown .notification-box {
+  padding: 10px 0px;
+}
+
+#notifications-dropdown .bg-gray {
+  background-color: #eee;
+}
+
+@media (max-width: 640px) {
+  #notifications-dropdown .dropdown-menu {
+    top: 50px;
+    left: -16px;
+    width: 290px;
+  }
+
+  #notifications-dropdown .nav {
+    display: block;
+  }
+
+  #notifications-dropdown .nav .nav-item,
+  #notifications-dropdown .nav .nav-item a {
+    padding-left: 0px;
+  }
+
+  #notifications-dropdown .message {
+    font-size: 13px;
+  }
+}
+
+#notifications-dropdown .p1[data-count]:after {
+  position: absolute;
+  right: 10%;
+  top: 8%;
+  content: attr(data-count);
+  font-size: 60%;
+  padding: 0.2em;
+  border-radius: 50%;
+  line-height: 1em;
+  color: white;
+  background: rgba(255, 0, 0, 0.85);
+  text-align: center;
+  min-width: 1em;
+  font-weight: bold;
+}
+
+#notifications-dropdown .dropdown-menu {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+@media (min-width: 992px) {
+  #notifications-dropdown .dropdown-menu {
+    position: absolute;
+  }
+}
+

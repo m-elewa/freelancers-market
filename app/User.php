@@ -2,11 +2,12 @@
 
 namespace App;
 
+use App\Traits\Models\UuidModel;
+use App\Notifications\VerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Traits\Models\UuidModel;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -41,10 +42,27 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['name'];
+
     protected $attributes = [
         'status_id' => Status::ACTIVE_STATUS,
         'role_id' => Role::USER_ROLE,
     ];
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
+    }
 
     /**
      * Get the full name for the user
@@ -53,6 +71,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function name(): string
     {
         return ucfirst("{$this->first_name} {$this->last_name}");
+    }
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->name();
     }
 
     public function jobs(): HasMany
