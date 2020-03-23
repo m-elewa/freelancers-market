@@ -7,13 +7,11 @@ use App\Bid;
 use App\Job;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Notifications\BidPostedNotification;
+use Illuminate\Support\Facades\Notification;
 
 class JobTest extends TestCase
 {
-    // use RefreshDatabase;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -76,9 +74,11 @@ class JobTest extends TestCase
     }
 
     /** @test */
-    public function user_can_store_job_bid(): void
+    public function user_can_store_job_bid_and_send_notification(): void
     {
-        $job = Job::inRandomOrder()->first();
+        Notification::fake();
+        
+        $job = Job::inRandomOrder()->with('user')->first();
 
         $uri = route('jobs.store-bid', ['job' => $job->id]);
         $bid = factory(Bid::class)->make(['user_id' => null, 'job_id' => null]);
@@ -89,6 +89,10 @@ class JobTest extends TestCase
         $this->assertDatabaseHas('bids', $bid->only(['description', 'amount']) + ['job_id' => $job->id, 'user_id' => auth()->id()]);
 
         $response->assertRedirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));
+
+        Notification::assertSentTo(
+            $job->user,
+            BidPostedNotification::class);
         
         $job->bids()->latest()->first()->delete();
     }

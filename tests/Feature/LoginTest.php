@@ -4,14 +4,15 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class LoginTest extends TestCase
 {
-    // use RefreshDatabase;
-
     /** @test */
     public function user_can_not_see_setting_page_if_not_logged_in(): void
     {
@@ -19,6 +20,16 @@ class LoginTest extends TestCase
         $uri = route('setting.edit');
 
         $this->get($uri)->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function user_can_view_a_login_form()
+    {
+        $this->assertGuest();
+        $response = $this->get(route('login'));
+
+        $response->assertSuccessful();
+        $response->assertViewIs('auth.login');
     }
 
     /** @test */
@@ -57,22 +68,55 @@ class LoginTest extends TestCase
             'password' => 'password',
         ]);
         $response->assertSessionHasNoErrors();
-        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs($user);
         $response->assertRedirect(route('home'));
 
         auth()->user()->delete();
     }
 
     /** @test */
-    public function user_should_be_able_to_logout()
+    public function user_cannot_view_a_login_form_when_authenticated()
     {
         $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)->get(route('login'));
+
+        $response->assertRedirect(route('home'));
+        $user->delete();
+    }
+
+    /** @test */
+    public function user_should_be_able_to_logout_and_trigger_logout_event()
+    {
+        $user = factory(User::class)->create();
+        Event::fake();
 
         $this->actingAs($user)
             ->post(route('logout'))
             ->assertRedirect(route('home'));
 
         $this->assertFalse($this->isAuthenticated());
+        Event::assertDispatched(Logout::class);
         $user->delete();
+    }
+
+    /** @test */
+    public function user_receives_an_email_with_a_password_reset_link()
+    {
+        Notification::fake();
+      
+        $user = factory(User::class)->create();
+      
+        $response = $this->post(route('password.email'), [
+            'email' => $user->email,
+        ]);
+
+        $token = DB::table('password_resets')->latest()->first();
+
+        $this->assertNotNull($token);
+      
+        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($token) {
+            return Hash::check($notification->token, $token->token) === true;
+        });
     }
 }

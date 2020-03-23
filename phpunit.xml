@@ -30,6 +30,10 @@
         <env name="DB_HOST" value="mysql"/>
         <env name="DB_USERNAME" value="root"/>
         <env name="DB_PASSWORD" value="root"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="SCOUT_QUEUE" value="false"/>
+        <env name="SCOUT_PREFIX" value="test_"/>
+        <env name="BROADCAST_DRIVER" value="null"/>
 
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>

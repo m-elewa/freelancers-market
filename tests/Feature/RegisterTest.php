@@ -3,30 +3,15 @@
 namespace Tests\Feature;
 
 use App\User;
-use Faker\Factory;
 use Tests\TestCase;
-use Illuminate\Support\Str;
+use App\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 
 class RegisterTest extends TestCase
 {
-    // use RefreshDatabase;
     use WithFaker;
-
-    /** @test */
-    public function users_can_register_an_account()
-    {
-        $response = $this->post(route('register'), $this->validParams());
-        $response->assertSessionHasNoErrors();
-
-        $response->assertRedirect(route('home'));
-        $this->assertTrue(Auth::check());
-
-        auth()->user()->delete();
-    }
 
     /** @test */
     public function email_is_required()
@@ -85,5 +70,21 @@ class RegisterTest extends TestCase
         $response->assertSessionHasErrors('email');
         $this->assertFalse(Auth::check());
         $user->delete();
+    }
+
+    /** @test */
+    public function users_can_register_an_account_with_email_verification()
+    {
+        Notification::fake();
+
+        $response = $this->post(route('register'), $this->validParams());
+        $response->assertSessionHasNoErrors();
+
+        $response->assertRedirect(route('home'));
+        $this->assertTrue(Auth::check());
+
+        Notification::assertSentTo(auth()->user(), VerifyEmail::class);
+        
+        auth()->user()->delete();
     }
 }
