@@ -5,13 +5,13 @@
 <div class="container">
 
     <div class="row justify-content-center">
-        <div class="col-8 d-flex justify-content-between border-bottom mb-3">
+        <div class="col-lg-8 col-md-12 d-flex justify-content-between border-bottom mb-3">
             <h1>Notifications</h1>
             <a href="{{ route('notifications.mark-all-as-read') }}" class="align-self-center">Mark all as read</a>
         </div>
 
         @forelse ($notifications as $notification)
-        <div class="col-8">
+        <div class="col-lg-8 col-md-12">
             <div class="card my-2 shadow @if($notification->read_at) text-white bg-secondary @endif">
             <div class="card-body">
                 <a href="
@@ -31,7 +31,7 @@
             </div>
 
             <div class="card-footer">
-                <div>{{$notification->created_at->diffForHumans()}}</div>
+                <div>{{$notification->data['created_at']}}</div>
             </div>
         </div>
     </div>

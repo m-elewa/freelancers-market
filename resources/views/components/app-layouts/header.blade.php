@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -31,7 +31,7 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 <li class="nav-item">
-                    <a class="btn btn-outline-success mx-2 d-none d-lg-block shadow-sm" href="{{ route('jobs.create') }}">Post a Project</a>
+                    <a class="btn btn-outline-success mx-2 shadow-sm" href="{{ route('jobs.create') }}">Post a Project</a>
                 </li>
                 @guest
                     <li class="nav-item">

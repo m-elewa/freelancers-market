@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 class NotificationController extends Controller
 {
     /**
-     * TODO: test
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -17,7 +16,6 @@ class NotificationController extends Controller
     }
 
     /**
-     * TODO: test
      * Mark All Notifications As Read.
      *
      * @return \Illuminate\Http\Response

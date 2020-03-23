@@ -37,7 +37,7 @@
                 
             <div class="card-body">
                 <a href="{{ route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]) }}"><h5 class="card-title">{{Str::words($job->title, 15)}}</h5></a>
-                <p class="card-text">{{Str::words(trim(strip_tags($job->description)), 30)}}</p>
+                <p class="card-text">{{Str::words(trim(strip_tags($job->description)), 40)}}</p>
             </div>
 
             <div class="card-footer text-muted d-flex justify-content-between">

@@ -29,6 +29,25 @@ class Job extends Model
         'status_id' => Status::ACTIVE_STATUS,
     ];
 
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return $this->only([
+            'id',
+            'title',
+            'description',
+        ]);
+    }
+
+    public function shouldBeSearchable()
+    {
+        return $this->status_id === Status::ACTIVE_STATUS;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

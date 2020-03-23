@@ -9,7 +9,7 @@
     <div class="row">
 
       <div class="table-responsive border shadow">
-            <table class="table table-striped">
+            <table class="table table-striped mb-0">
                 <thead>
                   <tr>
                     <th scope="col">Title</th>
@@ -40,9 +40,11 @@
               <x-jobs.nodata/>
               @endif
 
-              <div class="col-12 justify-content-end d-flex">
+              @if ($jobs->hasPages())
+              <div class="col-12 justify-content-end d-flex border-top pt-3">
                 {{ $jobs->links() }}
               </div>
+              @endif
         </div>
                 
     </div>

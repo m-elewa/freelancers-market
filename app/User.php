@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'password', 'role_id', 'status_id', 'email', 'upwork_profile_link'
+        'first_name', 'last_name', 'password', 'role_id', 'status_id', 'email', 'upwork_profile_link', 'email_verified_at'
     ];
 
     /**
@@ -81,6 +81,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getNameAttribute()
     {
         return $this->name();
+    }
+
+    /**
+     * Scope a query to only include admin users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAdmin($query)
+    {
+        return $query->where('role_id', Role::ADMIN_ROLE);
     }
 
     public function jobs(): HasMany

@@ -13,6 +13,7 @@ use App\Http\Requests\UpdatePassword;
 use App\Http\Requests\UpdateUpworkLink;
 use Str;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 
 class SettingController extends Controller
 {
@@ -34,14 +35,20 @@ class SettingController extends Controller
      */
     public function update(UpdateProfile $request)
     {
-        if($v = $this->checkPassword($request, 'current_password')) {
-            return back()->withInput()->withErrors($v);
+        $this->checkPassword($request, 'current_password');
+
+        $user = $request->user();
+        $userData = $request->validated();
+
+        if($request->email !== $user->email) {
+            $userData['email_verified_at'] = null;
+            $this->updateUserData($request, $user, $userData);
+            $user->sendEmailVerificationNotification();
+            
+        } else {
+            $this->updateUserData($request, $user, $userData);
         }
 
-        auth()->user()->update(array_merge(
-            $request->validated(), 
-            ['upwork_profile_link' => $this->validateUpworkLink($request->upwork_profile_link)]
-        ));
         return redirect(route('setting.edit'));
     }
 
@@ -53,9 +60,7 @@ class SettingController extends Controller
      */
     public function updatePassword(UpdatePassword $request)
     {
-        if($v = $this->checkPassword($request, 'current_password_modal')) {
-            return back()->withInput()->withErrors($v);
-        }
+        $this->checkPassword($request, 'current_password_modal');
 
         auth()->user()->update(['password' => bcrypt($request->password)]);
         return redirect(route('setting.edit'));
@@ -63,8 +68,9 @@ class SettingController extends Controller
 
     public function checkPassword($request, $field) {
         if(!Hash::check($request->get($field), auth()->user()->password)) {
-            $v = Validator::make([], []);
-            return $v->getMessageBag()->add($field, 'Wrong Password!');
+            throw ValidationException::withMessages([
+                $field => ['Wrong Password!'],
+            ]);
         }
 
         return null;
@@ -81,5 +87,20 @@ class SettingController extends Controller
         $upworkLink = $this->validateUpworkLink($request->upwork_profile_link);
         auth()->user()->update(['upwork_profile_link' => $upworkLink]);
         return back();
+    }
+
+    /**
+     * Update user data.
+     *
+     * @param  \Illuminate\Http\UpdateProfile   $request
+     * @param  \App\User                        $user
+     * @param  array                            $userData
+     */
+    public function updateUserData(UpdateProfile $request, $user, $userData): void
+    {
+        $user->update(array_merge(
+            $userData, 
+            ['upwork_profile_link' => $this->validateUpworkLink($request->upwork_profile_link)]
+        ));
     }
 }

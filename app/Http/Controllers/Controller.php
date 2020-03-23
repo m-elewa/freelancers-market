@@ -19,8 +19,10 @@ class Controller extends BaseController
      * @param  string  $upworkLink
      * @return string
      */
-    public function validateUpworkLink($upworkLink): string
+    public function validateUpworkLink($upworkLink): ?string
     {
-        return Str::of($upworkLink)->trim()->replace(' ', '');
+        $url = Str::of($upworkLink)->trim()->replace(' ', '');
+
+        return $url != '' ? $url : null;
     }
 }
