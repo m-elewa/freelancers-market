@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -10,11 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-            @guest
-                <li class="nav-item">
-                    <a class="nav-link" href="#">How It Works</a>
-                </li>
-            @else
+            @auth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('jobs.search') }}">Find Work</a>
                 </li>
@@ -24,7 +20,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('jobs.bid-index') }}">My Bids</a>
                 </li>
-            @endguest
+            @endauth
         </ul>
 
             <!-- Right Side Of Navbar -->
