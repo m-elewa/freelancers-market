@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         $user = factory(User::class)->create([
             'first_name' => 'Mahmoud',
             'last_name' => 'Elewa',
-            'email' => 'admin@fuc.com',
+            'email' => 'admin@example.com',
             'upwork_profile_link' => '~012cdf4275117c54ca',
             'role_id' => Role::ADMIN_ROLE,
         ]);

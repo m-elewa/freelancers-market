@@ -17,14 +17,15 @@ Route::get('/', 'HomeController@index')->name('home');
 // auth
 Auth::routes(['verify' => true]);
 
-// jobs
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('jobs/search', 'JobController@search')->name('jobs.search');
-    Route::get('jobs/bid', 'JobController@bidsIndex')->name('jobs.bid-index');
-    Route::post('jobs/{job}/create-bid', 'JobController@storeBid')->name('jobs.store-bid');
-    Route::resource('jobs', 'JobController')->except(['edit', 'update', 'destroy', 'show']);
-    Route::get('jobs/{job}/{title?}', 'JobController@show')->name('jobs.show');
-
+    // jobs
+    Route::resource('jobs', 'JobController')->only(['index', 'create', 'store']);
+    Route::group(['prefix' => 'jobs', 'as' => 'jobs.'], function() {
+        Route::get('search', 'JobController@search')->name('search');
+        Route::get('bid', 'JobController@bidsIndex')->name('bid-index');
+        Route::post('{job}/create-bid', 'JobController@storeBid')->name('store-bid');
+        Route::get('{job}/{title?}', 'JobController@show')->name('show');
+    });
 
     // setting
     Route::group(['prefix' => 'setting', 'as' => 'setting.'], function() {

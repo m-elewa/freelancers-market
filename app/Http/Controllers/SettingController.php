@@ -61,7 +61,6 @@ class SettingController extends Controller
     public function updatePassword(UpdatePassword $request)
     {
         $this->checkPassword($request, 'current_password_modal');
-
         auth()->user()->update(['password' => bcrypt($request->password)]);
         return redirect(route('setting.edit'));
     }
@@ -72,8 +71,6 @@ class SettingController extends Controller
                 $field => ['Wrong Password!'],
             ]);
         }
-
-        return null;
     }
 
     /**

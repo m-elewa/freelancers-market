@@ -22,7 +22,7 @@ class NotificationController extends Controller
      */
     public function markAllAsRead()
     {
-        $jobs = auth()->user()->unreadNotifications->markAsRead();
+        auth()->user()->unreadNotifications->markAsRead();
 
         return back();
     }

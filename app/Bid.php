@@ -34,7 +34,7 @@ class Bid extends Model
     }
 
     /**
-     * Scope a query to only include freelancer bid.
+     * Scope a query to only include freelancer's bid.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
