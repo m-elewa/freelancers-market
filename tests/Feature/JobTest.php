@@ -65,7 +65,7 @@ class JobTest extends TestCase
         $response = $this->post($uri, $job->toArray());
         $response->assertSessionHasNoErrors();
 
-        $this->assertDatabaseHas('jobs', $job->only(['description', 'title', 'upwork_job_link']));
+        $this->assertDatabaseHas('jobs', $job->only(['description', 'title', 'job_link']));
         $job = Job::latest()->first();
 
         $response->assertRedirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));

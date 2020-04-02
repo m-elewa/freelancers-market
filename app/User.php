@@ -13,15 +13,13 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, UuidModel;
 
-    const UPWORK_LINK = 'upwork.com/freelancers/';
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'password', 'role_id', 'status_id', 'email', 'upwork_profile_link', 'email_verified_at'
+        'first_name', 'last_name', 'password', 'role_id', 'status_id', 'email', 'profile_link', 'email_verified_at'
     ];
 
     /**
@@ -109,8 +107,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role_id === Role::ADMIN_ROLE;
     }
 
-    public function upworkLink(): string
+    public function freelanceWebsiteLink(): string
     {
-        return 'https://www.' . SELF::UPWORK_LINK . $this->upwork_profile_link;
+        return 'https://www.' . config("setting.freelance_website_domain") . $this->profile_link;
     }
 }

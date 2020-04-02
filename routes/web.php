@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('', 'SettingController@edit')->name('edit');
         Route::post('', 'SettingController@update')->name('update');
         Route::post('password', 'SettingController@updatePassword')->name('update-password');
-        Route::post('update-upwork-profile-link', 'SettingController@updateUpworkLink')->name('update-upwork-profile');
+        Route::post('update-profile-link', 'SettingController@updateProfileLink')->name('update-profile-link');
     });
 
     // notifications

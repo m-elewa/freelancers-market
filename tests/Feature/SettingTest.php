@@ -33,7 +33,7 @@ class SettingTest extends TestCase
         $response = $this->post($uri, $user->toArray() + ['current_password' => 'password']);
         $response->assertSessionHasNoErrors();
 
-        $this->assertEquals(Auth()->user()->upwork_profile_link, $user->upwork_profile_link);
+        $this->assertEquals(Auth()->user()->profile_link, $user->profile_link);
         $this->assertEquals(Auth()->user()->email, $user->email);
 
         $response->assertRedirect(route('setting.edit'));
@@ -73,31 +73,31 @@ class SettingTest extends TestCase
     }
     
     /** @test */
-    public function user_can_not_update_his_upwork_profile_link_from_job_page_if_not_empty(): void
+    public function user_can_not_update_his_profile_link_from_job_page_if_not_empty(): void
     {
-        $uri = route('setting.update-upwork-profile');
+        $uri = route('setting.update-profile-link');
         $user = factory(User::class)->make();
 
         $response = $this->post($uri, [
-            'upwork_profile_link' => $user->upwork_profile_link,
+            'profile_link' => $user->profile_link,
         ]);
-        $this->assertNotEquals(Auth()->user()->upwork_profile_link, $user->upwork_profile_link);
+        $this->assertNotEquals(Auth()->user()->profile_link, $user->profile_link);
         $response->assertStatus(403);
     }
     
     /** @test */
-    public function user_can_update_his_upwork_profile_link_from_job_page_if_empty(): void
+    public function user_can_update_his_profile_link_from_job_page_if_empty(): void
     {
-        $uri = route('setting.update-upwork-profile');
+        $uri = route('setting.update-profile-link');
         $user = factory(User::class)->make();
 
-        auth()->user()->update(['upwork_profile_link' => '']);
+        auth()->user()->update(['profile_link' => '']);
 
         $response = $this->post($uri, [
-            'upwork_profile_link' => $user->upwork_profile_link,
+            'profile_link' => $user->profile_link,
         ]);
         $response->assertSessionHasNoErrors();
-        $this->assertEquals(Auth()->user()->upwork_profile_link, $user->upwork_profile_link);
+        $this->assertEquals(Auth()->user()->profile_link, $user->profile_link);
         $response->assertRedirect();
     }
 

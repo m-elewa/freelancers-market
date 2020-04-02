@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('upwork_profile_link')->unique()->nullable();
+            $table->string('profile_link')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             # Constrains
             $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('status_id')->references('id')->on('statuses');
-            $table->index(['email', 'upwork_profile_link']);
+            $table->index(['email', 'profile_link']);
         });
     }
 

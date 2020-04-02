@@ -61,17 +61,17 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="upwork_profile_link" class="col-md-4 col-form-label text-md-right">Upwork Profile Link</label>
+                            <label for="profile_link" class="col-md-4 col-form-label text-md-right">{{ config("setting.freelance_website_name") }} Profile Link</label>
 
                             <div class="col-md-6 input-group">
                                 <div class="input-group-prepend">
-                                    <div class="input-group-text">{{ App\User::UPWORK_LINK }}</div>
+                                    <div class="input-group-text">{{ config("setting.freelance_website_domain") }}</div>
                                 </div>
 
-                                <input id="upwork_profile_link" type="text" class="form-control @error('upwork_profile_link') is-invalid @enderror" name="upwork_profile_link" 
-                                value="{{ old('upwork_profile_link', Auth::user()->upwork_profile_link) }}">
+                                <input id="profile_link" type="text" class="form-control @error('profile_link') is-invalid @enderror" name="profile_link" 
+                                value="{{ old('profile_link', Auth::user()->profile_link) }}">
 
-                                @error('upwork_profile_link')
+                                @error('profile_link')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

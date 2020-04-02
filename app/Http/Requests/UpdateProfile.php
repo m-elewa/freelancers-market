@@ -29,7 +29,7 @@ class UpdateProfile extends FormRequest
             'first_name' => ['required', 'string', 'max:255', 'min:2'],
             'last_name' => ['required', 'string', 'max:255', 'min:2'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(auth()->id())],
-            'upwork_profile_link' => ['nullable', 'string', 'max:255', Rule::unique('users')->ignore(auth()->id())],
+            'profile_link' => ['nullable', 'string', 'max:255', Rule::unique('users')->ignore(auth()->id())],
             'current_password' => ['required', 'string', 'min:8']
         ];
     }

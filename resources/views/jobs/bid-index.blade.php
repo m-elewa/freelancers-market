@@ -31,7 +31,7 @@
                           {{  $bid->created_at->diffForHumans() }}
                         </td>
                         <td>
-                          <a href="{{ $bid->job->upworkLink() }}" target="_blank" class="btn btn-primary btn-sm">Upwork Link</a>
+                          <a href="{{ $bid->job->freelanceWebsiteLink() }}" target="_blank" class="btn btn-primary btn-sm">{{ config("setting.freelance_website_name") }} Link</a>
                         </td>
                       </tr>
                     @endforeach

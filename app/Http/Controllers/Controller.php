@@ -13,15 +13,16 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * TODO: remove any url queries
-     * Validate Upwork Link.
+     * Validate Freelance Website Link.
+     * 
+     * TODO: remove any unwanted url queries
      *
-     * @param  string  $upworkLink
+     * @param  string  $freelanceWebsiteLink
      * @return string
      */
-    public function validateUpworkLink($upworkLink): ?string
+    public function validateFreelanceWebsiteLink($freelanceWebsiteLink): ?string
     {
-        $url = Str::of($upworkLink)->replace(' ', '');
+        $url = Str::of($freelanceWebsiteLink)->replace(' ', '');
 
         return $url != '' ? $url : null;
     }

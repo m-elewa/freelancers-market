@@ -24,7 +24,9 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         // fresh && seed
-        // $this->migrate();
+        if(config('setting.migrate_test_database')) {
+            $this->migrate();
+        }
     }
 
     /**

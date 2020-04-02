@@ -123,10 +123,6 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'error_pages_layout' => 'errors::illustrated-layout',
-
-    'seed_randum_amount' => env('SEED_RANDUM_AMOUNT', true),
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -21,7 +21,7 @@
                         <p>{{ $job->created_at->diffForHumans() }} | {{ $job->bids_count }}
                             {{ Str::plural('bid', $job->bids_count) }}</p>
                     </div>
-                    <div><a href="{{ $job->upworkLink() }}" target="_blank" class="btn btn-primary">Upwork Link</a>
+                    <div><a href="{{ $job->freelanceWebsiteLink() }}" target="_blank" class="btn btn-primary">{{ config("setting.freelance_website_name") }} Link</a>
                     </div>
                 </div>
             </div>
@@ -42,11 +42,11 @@
                         <div>
                             <strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} |
                             {{ $bid->created_at->diffForHumans() }}
-                            @if(!$bid->user->upwork_profile_link) | <span class="badge badge-danger">Invalid upwork profile
+                            @if(!$bid->user->profile_link) | <span class="badge badge-danger">Invalid {{ config("setting.freelance_website_name") }} profile
                                 link</span>@endif
                         </div>
-                        <div><a href="{{ $bid->user->upworkLink() }}" class="btn btn-primary btn-sm stretched-link"
-                                target="_blank">Show Upwork Profile</a></div>
+                        <div><a href="{{ $bid->user->freelanceWebsiteLink() }}" class="btn btn-primary btn-sm stretched-link"
+                                target="_blank">Show {{ config("setting.freelance_website_name") }} Profile</a></div>
                     </div>
                 </div>
 
@@ -55,7 +55,7 @@
 
             <div class="col-12">
                 <div class="card my-4 shadow">
-                    @if(Auth::user()->upwork_profile_link)
+                    @if(Auth::user()->profile_link)
                     <h5 class="card-header">Place a Bid on this Project</h5>
                     <div class="card-body">
                         <h5 class="card-title">Bid Details</h5>
@@ -92,26 +92,26 @@
                     @else
 
                     <div class="card-body">
-                        <h5 class="card-title">Add upwork profile link</h5>
+                        <h5 class="card-title">Add {{ config("setting.freelance_website_name") }} profile link</h5>
 
-                        <form method="POST" action="{{ route('setting.update-upwork-profile') }}">
+                        <form method="POST" action="{{ route('setting.update-profile-link') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="upwork_profile_link">You have to add your upwork profile link first to add bids.
+                                <label for="profile_link">You have to add your {{ config("setting.freelance_website_name") }} profile link first to add bids.
                                     You can edit it later from <a href="{{ route('setting.edit') }}">your setting
                                         page.</a></label>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <div class="input-group-text">{{ App\User::UPWORK_LINK }}</div>
+                                        <div class="input-group-text">{{ config("setting.freelance_website_domain") }}</div>
                                     </div>
 
-                                    <input name="upwork_profile_link" type="text"
-                                        class="form-control @error('upwork_profile_link') is-invalid @enderror"
-                                        value="{{ old('upwork_profile_link') }}" id="upwork_profile_link" required>
+                                    <input name="profile_link" type="text"
+                                        class="form-control @error('profile_link') is-invalid @enderror"
+                                        value="{{ old('profile_link') }}" id="profile_link" required>
                                 </div>
 
-                                @error('upwork_profile_link')
+                                @error('profile_link')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -148,11 +148,11 @@
                     <div>
                         <strong>${{ $bid->amount }}</strong> | {{ $bid->user->name() }} |
                         {{ $bid->created_at->diffForHumans() }}
-                        @if(!$bid->user->upwork_profile_link) | <span class="badge badge-danger">Invalid upwork profile
+                        @if(!$bid->user->profile_link) | <span class="badge badge-danger">Invalid {{ config("setting.freelance_website_name") }} profile
                             link</span>@endif
                     </div>
-                    <div><a href="{{ $bid->user->upworkLink() }}" class="btn btn-primary btn-sm stretched-link"
-                            target="_blank">Show Upwork Profile</a></div>
+                    <div><a href="{{ $bid->user->freelanceWebsiteLink() }}" class="btn btn-primary btn-sm stretched-link"
+                            target="_blank">Show {{ config("setting.freelance_website_name") }} Profile</a></div>
                 </div>
             </div>
 

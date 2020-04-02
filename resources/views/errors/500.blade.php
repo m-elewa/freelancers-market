@@ -1,4 +1,4 @@
-@extends(config('app.error_pages_layout'))
+@extends(config('setting.error_pages_layout'))
 
 @section('title', __('Server Error'))
 @section('code', '500')

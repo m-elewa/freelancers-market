@@ -42,11 +42,9 @@
 <div class="container d-flex justify-content-center align-items-center h-100">
     <div class="text-dark">
         <div class="display-4 my-3">
-            NEVER pay to work!
+            {{ config('setting.home_page_introduction_title') }}
         </div>
-        <p class="lead"><span class="font-weight-bold">Apply for Upwork jobs for free.</span> We will work like a broker between the clients and
-             the freelancers but the actual work and pay will be done on Upwork website. <u>How it works?</u> clients can link their jobs here to
-              let freelancers apply for free on their jobs. Then the client can invite the suited freelancer(s) to apply on his job on Upwork website.</p>
+        {!! config('setting.home_page_introduction_details') !!}
         <a class="btn btn-primary btn-lg my-3" href="{{ route('register') }}" role="button">Get Started</a>
     </div>
 </div>

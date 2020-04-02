@@ -54,7 +54,7 @@ class JobController extends Controller
     {
         $job = auth()->user()->jobs()->create(array_merge(
             $request->validated(), 
-            ['upwork_job_link' => $this->validateUpworkLink($request->upwork_job_link)]
+            ['job_link' => $this->validateFreelanceWebsiteLink($request->job_link)]
         ));
 
         return redirect(route('jobs.show', ['job' => $job->id, 'title' => Str::slug($job->title)]));

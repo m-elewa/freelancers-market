@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $isRandum = config('app.seed_randum_amount');
+        $isRandum = config('setting.seed_randum_amount');
 
         // create 30 users
         factory(User::class, $isRandum ? rand(24, 40) : 30)->create();
@@ -23,7 +23,6 @@ class UserSeeder extends Seeder
             'first_name' => 'Mahmoud',
             'last_name' => 'Elewa',
             'email' => 'admin@example.com',
-            'upwork_profile_link' => '~012cdf4275117c54ca',
             'role_id' => Role::ADMIN_ROLE,
         ]);
     }

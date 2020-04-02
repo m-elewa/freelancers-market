@@ -13,7 +13,7 @@ class NotificationSeeder extends Seeder
      */
     public function run()
     {
-        $isRandum = config('app.seed_randum_amount');
+        $isRandum = config('setting.seed_randum_amount');
 
         $defaultUser = User::admin()->first();
 

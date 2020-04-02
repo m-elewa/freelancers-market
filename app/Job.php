@@ -12,8 +12,6 @@ class Job extends Model
 {
     use UuidModel, Searchable;
 
-    const UPWORK_LINK = 'upwork.com/jobs/';
-
     protected $withCount = ['bids'];
 
     /**
@@ -22,7 +20,7 @@ class Job extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'status_id', 'user_id', 'upwork_job_link'
+        'title', 'description', 'status_id', 'user_id', 'job_link'
     ];
 
     protected $attributes = [
@@ -58,8 +56,8 @@ class Job extends Model
         return $this->hasMany(Bid::class);
     }
 
-    public function upworkLink(): string
+    public function freelanceWebsiteLink(): string
     {
-        return 'https://www.' . SELF::UPWORK_LINK . $this->upwork_job_link;
+        return 'https://www.' . config("setting.freelance_website_domain") . $this->job_link;
     }
 }

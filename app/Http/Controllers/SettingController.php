@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Job;
-use Validator;
-use App\Status;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreJob;
 use App\Http\Requests\UpdateProfile;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdatePassword;
-use App\Http\Requests\UpdateUpworkLink;
-use Str;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\UpdateProfileLink;
 use Illuminate\Validation\ValidationException;
 
 class SettingController extends Controller
@@ -79,10 +72,10 @@ class SettingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateUpworkLink(UpdateUpworkLink $request)
+    public function updateProfileLink(UpdateProfileLink $request)
     {
-        $upworkLink = $this->validateUpworkLink($request->upwork_profile_link);
-        auth()->user()->update(['upwork_profile_link' => $upworkLink]);
+        $freelanceWebsiteLink = $this->validateFreelanceWebsiteLink($request->profile_link);
+        auth()->user()->update(['profile_link' => $freelanceWebsiteLink]);
         return back();
     }
 
@@ -97,7 +90,7 @@ class SettingController extends Controller
     {
         $user->update(array_merge(
             $userData, 
-            ['upwork_profile_link' => $this->validateUpworkLink($request->upwork_profile_link)]
+            ['profile_link' => $this->validateFreelanceWebsiteLink($request->profile_link)]
         ));
     }
 }

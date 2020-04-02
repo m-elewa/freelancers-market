@@ -27,7 +27,7 @@ class StoreJob extends FormRequest
         return [
             'title' => 'required|max:255',
             'description' => 'required|max:1000',
-            'upwork_job_link' => ['required', 'string', 'max:255', Rule::unique('jobs')],
+            'job_link' => ['required', 'string', 'max:255', Rule::unique('jobs')],
         ];
     }
 }
