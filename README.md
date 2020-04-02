@@ -1,78 +1,109 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Freelancers Black Market
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Freelancers Black Market platform works like a broker between the clients and the freelancers but the actual work and pay will be done on the freelance website that both the freelancer and the client are using. <b>How it works?</b> clients can link their jobs on the platform to let freelancers apply for free on their jobs. Then the client can invite the suited freelancer(s) to apply on his job on The freelance website.
 
-## About Laravel
+## Basic Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Real-time notifications on self hosted laravel echo server.
+- Full-text search with Laravel Scout and TNTSearch.
+- Shipped with testing units to test the application using PHPUnit.
+- Clean, high quality and easy to understand code.
+- Compatible with PHP 7.4 and Laravel 7.
+- Dockerized developing environment to speed up the installation process.
+- Ability to seed fake data in the database.
+- Utilize Redis for broadcasting, caching, queues and sessions.
+- Ability to debug and track the development environment with Laravel Telescope and Horizon.
+- And more...
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+In order to use Freelancers Black Market, you will need:
 
-## Learning Laravel
+- [Docker Engine](https://docs.docker.com/installation/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Docker Machine](https://docs.docker.com/machine/)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Clone the source code `git clone --recurse-submodules https://github.com/m-elewa/freelancers-black-market.git`
+2. Enter the laradock folder and rename env-example to .env `cp env-example .env`
+3. Make these changes to `.env`
+```shell
+### PHP Version ###########################################
+PHP_VERSION=7.4
+### WORKSPACE #############################################
+WORKSPACE_VUE_CLI_SERVE_HOST_PORT=9090
+```
+4. Rename `laravel-horizon.conf.example` to `laravel-horizon.conf`
+```
+cp laravel-horizon/supervisord.d/laravel-horizon.conf.example laravel-horizon/supervisord.d/laravel-horizon.conf
+```
+5. Run Docker Containers `make docker-up` or
+```
+docker-compose up -d nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server
+```
+6. to setup the application Run `make setup` or
+```
+docker-compose exec --user=laradock workspace composer setup
+```
+7. You can now login with `admin@example.com` and password as `password` on `localhost`
 
-## Laravel Sponsors
+## Tips
+- run `make test-database` to create `test` database for tests
+- run `make test` to test the application
+- run `make seed` to drop all tables then migrate and seed the database
+- for Laravel Telescope go to `localhost/telescope`
+- for Laravel Horizon go to `localhost/horizon`
+- for Portainer go to `localhost:9010`
+- for phpMyAdmin go to `localhost:8080`
+- to enter the Workspace container run `make bash` or
+```
+docker-compose exec --user=laradock workspace bash
+```
+-  change the freelance website name and domain in `.env` file
+```shell
+FREELANCE_WEBSITE_NAME="Freelance Website"
+FREELANCE_WEBSITE_DOMAIN="example.com/"
+```
+- to index the existing jobs run `make scout-import`
+- If you need to flush the jobs index run `make scout-flush`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Great open-source projects used to help build Freelancers Black Market
+* [Laravel](http://laravel.com/)
+    * [horizon](https://github.com/laravel/horizon)
+    * [scout](https://github.com/laravel/scout)
+    * [telescope](https://github.com/laravel/telescope)
+* [Laradock](https://github.com/laradock/laradock)
+    * [NGINX](https://www.nginx.com/)
+    * [MySQL](https://www.mysql.com/)
+    * [PhpMyAdmin](https://www.phpmyadmin.net/)
+    * [Redis](https://redis.io/)
+    * [Laravel Echo Server](https://github.com/tlaverdure/laravel-echo-server)
+    * [Portainer](https://www.portainer.io/)
+* [TNTSearch Driver for Laravel Scout](https://github.com/teamtnt/laravel-scout-tntsearch-driver)
+* [PHPUnit](https://github.com/sebastianbergmann/phpunit)
+* [Bootstrap](https://github.com/twbs/bootstrap)
+* [TinyMCE](https://www.tinymce.com/)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+## To Do
+- use ElasticSearch as the search engine
+- use AJAX and Vue.js for the search page
+- create admin control panel
+- add realtime messaging system
+- add more search filters
+- add more tests
+
+## Issues
+If you come across any issues please [report them here](https://github.com/m-elewa/freelancers-black-market/issues).
 
 ## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Contributing to the Freelancers Black Market project are welcome, please feel free to make any pull requests, or email me a feature request you would like to see in the future to Mahmoud Elewa at [mahmoud.elewa.999@gmail.com](mailto:mahmoud.elewa.999@gmail.com).
 
 ## Security Vulnerabilities
+If you discover a security vulnerability within Freelancers Black Market, please send an email to Mahmoud Elewa at [mahmoud.elewa.999@gmail.com](mailto:mahmoud.elewa.999@gmail.com), or create a pull request if possible.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Disclaimer
+Before using this project with any freelance website **you have to make sure first that this website allow it and it does not violate any of their Terms of Service.**
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Freelancers Black Market is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
