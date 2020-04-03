@@ -1,6 +1,6 @@
-include .env
+-include .env
 
-test-database:
+test-database: .env
 	@cd laradock && docker-compose exec mysql mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) -e \
 		'CREATE DATABASE IF NOT EXISTS `test` CHARACTER SET utf8 COLLATE utf8_general_ci'
 
@@ -17,10 +17,10 @@ bash:
 	@cd laradock && docker-compose exec --user=laradock workspace bash
 
 scout-import:
-	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:import App\\Jobs
+	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:import App\\Job
 
 scout-flush:
-	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Jobs
+	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Job
 
 docker-up:
 	@cd laradock && docker-compose up -d nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server

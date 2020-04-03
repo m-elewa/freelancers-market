@@ -1,6 +1,6 @@
 # Freelancers Black Market
 
-Freelancers Black Market platform works like a broker between the clients and the freelancers but the actual work and pay will be done on the freelance website that both the freelancer and the client are using. <b>How it works?</b> clients can link their jobs on the platform to let freelancers apply for free on their jobs. Then the client can invite the suited freelancer(s) to apply on his job on The freelance website.
+Freelancers Black Market is a platform works like a broker between the clients and the freelancers but the actual work and pay will be done on the freelance website that both the freelancer and the client are using. <b>How it works?</b> clients can link their jobs on the platform to let freelancers apply for free on their jobs. Then the client can invite the best suited freelancer(s) to apply on his job on The freelance website.
 
 ## Basic Features
 
@@ -69,7 +69,7 @@ FREELANCE_WEBSITE_DOMAIN="example.com/"
 - If you need to flush the jobs index run `make scout-flush`
 
 ## Great open-source projects used to help build Freelancers Black Market
-* [Laravel](http://laravel.com/)
+* [Laravel](https://github.com/laravel/laravel)
     * [horizon](https://github.com/laravel/horizon)
     * [scout](https://github.com/laravel/scout)
     * [telescope](https://github.com/laravel/telescope)
@@ -106,4 +106,4 @@ If you discover a security vulnerability within Freelancers Black Market, please
 Before using this project with any freelance website **you have to make sure first that this website allow it and it does not violate any of their Terms of Service.**
 
 ## License
-The Freelancers Black Market is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Freelancers Black Market is open-sourced software licensed under the [MIT license](https://github.com/m-elewa/freelancers-black-market/blob/master/LICENSE).

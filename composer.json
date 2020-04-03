@@ -65,8 +65,9 @@
         ],
         "setup": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "art key:generate",
-            "art migrate:fresh --seed",
+            "composer install",
+            "php artisan key:generate",
+            "php artisan migrate:fresh --seed",
             "npm install",
             "npm run dev"
         ]
