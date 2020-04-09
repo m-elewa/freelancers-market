@@ -1,6 +1,6 @@
-# Freelancers Black Market
+# Freelancers Market
 
-Freelancers Black Market is a platform works like a broker between the clients and the freelancers but the actual work and pay will be done on the freelance website that both the freelancer and the client are using. <b>How it works?</b> clients can link their jobs on the platform to let freelancers apply for free on their jobs. Then the client can invite the best suited freelancer(s) to apply on his job on The freelance website.
+Freelancers Market is a platform works like a broker between the clients and the freelancers while the actual work and pay done on the freelance website that both the freelancer and the client are using. <b>How it works?</b> clients can link their jobs on the platform to let freelancers apply on their jobs. Then the client can invite the best suited freelancer(s) to apply on his job on The freelance website.
 
 ## Basic Features
 
@@ -17,15 +17,15 @@ Freelancers Black Market is a platform works like a broker between the clients a
 
 ## Requirements
 
-In order to use Freelancers Black Market, you will need:
+In order to use Freelancers Market, you will need:
 
 - [Docker Engine](https://docs.docker.com/installation/)
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Docker Machine](https://docs.docker.com/machine/)
 
-## installation
+## Installation
 
-1. Clone the source code `git clone --recurse-submodules https://github.com/m-elewa/freelancers-black-market.git`
+1. Clone the source code `git clone --recurse-submodules https://github.com/m-elewa/freelancers-market.git`
 2. Enter the laradock folder and rename env-example to .env `cp env-example .env`
 3. Make these changes to `.env`
 ```shell
@@ -42,7 +42,7 @@ cp laravel-horizon/supervisord.d/laravel-horizon.conf.example laravel-horizon/su
 ```
 docker-compose up -d nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server
 ```
-6. to setup the application Run `make setup` or
+6. To setup the application Run `make setup` or
 ```
 docker-compose exec --user=laradock workspace composer setup
 ```
@@ -68,7 +68,7 @@ FREELANCE_WEBSITE_DOMAIN="example.com/"
 - to index the existing jobs run `make scout-import`
 - If you need to flush the jobs index run `make scout-flush`
 
-## Great open-source projects used to help build Freelancers Black Market
+## Great open-source projects used to help build Freelancers Market
 * [Laravel](https://github.com/laravel/laravel)
     * [horizon](https://github.com/laravel/horizon)
     * [scout](https://github.com/laravel/scout)
@@ -94,16 +94,16 @@ FREELANCE_WEBSITE_DOMAIN="example.com/"
 - add more tests
 
 ## Issues
-If you come across any issues please [report them here](https://github.com/m-elewa/freelancers-black-market/issues).
+If you come across any issues please [report them here](https://github.com/m-elewa/freelancers-market/issues).
 
 ## Contributing
-Contributing to the Freelancers Black Market project are welcome, please feel free to make any pull requests, or email me a feature request you would like to see in the future to Mahmoud Elewa at [mahmoud.elewa.999@gmail.com](mailto:mahmoud.elewa.999@gmail.com).
+Contributing to the Freelancers Market project are welcome, please feel free to make any pull requests, or email me a feature request you would like to see in the future to Mahmoud Elewa at [mahmoud.elewa.999@gmail.com](mailto:mahmoud.elewa.999@gmail.com).
 
 ## Security Vulnerabilities
-If you discover a security vulnerability within Freelancers Black Market, please send an email to Mahmoud Elewa at [mahmoud.elewa.999@gmail.com](mailto:mahmoud.elewa.999@gmail.com), or create a pull request if possible.
+If you discover a security vulnerability within Freelancers Market, please send an email to Mahmoud Elewa at [mahmoud.elewa.999@gmail.com](mailto:mahmoud.elewa.999@gmail.com), or create a pull request if possible.
 
 ## Disclaimer
 Before using this project with any freelance website **you have to make sure first that this website allow it and it does not violate any of their Terms of Service.**
 
 ## License
-The Freelancers Black Market is open-sourced software licensed under the [MIT license](https://github.com/m-elewa/freelancers-black-market/blob/master/LICENSE).
+The Freelancers Market is open-sourced software licensed under the [MIT license](https://github.com/m-elewa/freelancers-market/blob/master/LICENSE).
