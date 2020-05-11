@@ -27,6 +27,6 @@
         "@fortawesome/fontawesome-free": "^5.12.1",
         "laravel-echo": "^1.6.1",
         "socket.io-client": "^2.3.0",
-        "tinymce": "^5.2.0"
+        "tinymce": "^5.2.2"
     }
 }
