@@ -1,4 +1,4 @@
-<script src="{{ asset('node_modules/tinymce/tinymce.js') }}"></script>
+<script src="{{ mix('node_modules/tinymce/tinymce.js') }}"></script>
 <script>
 
 var ed = new tinymce.Editor('description', {

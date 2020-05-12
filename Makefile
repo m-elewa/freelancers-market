@@ -1,3 +1,5 @@
+#!/bin/bash
+
 -include .env
 
 test-database: .env
@@ -23,4 +25,7 @@ scout-flush:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Job
 
 docker-up:
-	@cd laradock && docker-compose up -d nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server
+	@cd laradock && docker-compose up -d --build nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
+
+deploy:
+	@cd laradock && docker-compose exec --user=laradock workspace bash -c '~/.composer/vendor/bin/envoy run deploy'
