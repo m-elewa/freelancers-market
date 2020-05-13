@@ -66,7 +66,6 @@
         ],
         "setup": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "composer global require laravel/envoy",
             "composer install",
             "php artisan key:generate",
             "php artisan migrate:fresh --seed",

@@ -18,6 +18,9 @@ setup:
 bash:
 	@cd laradock && docker-compose exec --user=laradock workspace bash
 
+npm-watch:
+	@cd laradock && docker-compose exec --user=laradock workspace bash -c 'npm run watch'
+
 scout-import:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:import App\\Job
 
@@ -25,7 +28,10 @@ scout-flush:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Job
 
 docker-up:
-	@cd laradock && docker-compose up -d --build nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
+	@cd laradock && docker-compose up -d --build --scale nginx=3 nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
+
+docker-stop:
+	@cd laradock && docker-compose stop
 
 deploy:
 	@cd laradock && docker-compose exec --user=laradock workspace bash -c '~/.composer/vendor/bin/envoy run deploy'

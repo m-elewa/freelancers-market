@@ -25,28 +25,27 @@ In order to use Freelancers Market, you will need:
 
 ## Installation
 
-1. Clone the source code `git clone --recurse-submodules https://github.com/m-elewa/freelancers-market.git`
-2. Enter the laradock folder and rename env-example to .env `cp env-example .env`
-3. Make these changes to `.env`
-```shell
-### PHP Version ###########################################
-PHP_VERSION=7.4
-### WORKSPACE #############################################
-WORKSPACE_VUE_CLI_SERVE_HOST_PORT=9090
+1. Install the project
 ```
-4. Rename `laravel-horizon.conf.example` to `laravel-horizon.conf`
+git clone -b develop --recurse-submodules https://github.com/m-elewa/freelancers-market.git \
+    && cd freelancers-market \
+    && git submodule update --remote \
+    && cd laradock \
+    && touch traefik/data/acme.json \
+    && chmod 600 traefik/data/acme.json \
+    && cp env-example .env
 ```
-cp laravel-horizon/supervisord.d/laravel-horizon.conf.example laravel-horizon/supervisord.d/laravel-horizon.conf
+2. Change `DOCKER_HOST_IP` in `.env` file to your Docker Host IP if you want to use XDebug
+3. Change `HOST_DOMAIN` and `ACME_EMAIL` in `.env` file to your website domain and email
+4. Run Docker Containers with `make docker-up` command from the root directory or from laradock directory run
 ```
-5. Run Docker Containers `make docker-up` or
+docker-compose up -d scale nginx=3 mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
 ```
-docker-compose up -d nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server
-```
-6. To setup the application Run `make setup` or
+5. To setup the application Run `make setup` from the root directory or from laradock directory run
 ```
 docker-compose exec --user=laradock workspace composer setup
 ```
-7. You can now login with `admin@example.com` and password as `password` on `localhost`
+6. You can now login with `admin@example.com` and password as `password`
 
 ## Tips
 - run `make test-database` to create `test` database for tests
