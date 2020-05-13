@@ -39,7 +39,7 @@ git clone -b develop --recurse-submodules https://github.com/m-elewa/freelancers
 3. Change `HOST_DOMAIN` and `ACME_EMAIL` in `.env` file to your website domain and email
 4. Run Docker Containers with `make docker-up` command from the root directory or from laradock directory run
 ```
-docker-compose up -d scale nginx=3 mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
+docker-compose up -d --build --scale nginx=3 nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
 ```
 5. To setup the application Run `make setup` from the root directory or from laradock directory run
 ```
