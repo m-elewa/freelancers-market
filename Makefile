@@ -27,10 +27,11 @@ scout-import:
 scout-flush:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Job
 
-docker-up:
-	@cd laradock && docker-compose up -d --build --scale nginx=3 nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
+up:
+	@cd laradock && docker-compose up -d --build --scale nginx=3 nginx mysql phpmyadmin workspace portainer \
+		redis laravel-horizon laravel-echo-server traefik ide-theia redis-webui netdata
 
-docker-stop:
+stop:
 	@cd laradock && docker-compose stop
 
 deploy:
