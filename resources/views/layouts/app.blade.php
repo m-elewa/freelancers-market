@@ -7,7 +7,7 @@
     <div id="app">
         <x-app-layouts.header/>
         
-        <main class="py-4">
+        <main class="py-4 d-flex flex-column h-100">
             @yield('content')
         </main>
 

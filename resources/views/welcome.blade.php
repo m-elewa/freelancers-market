@@ -1,11 +1,9 @@
 @extends('layouts.app')
 @section('css')
 <style>
-    html,
-    body {
+    html, body, #app {
         height: 100%;
     }
-
     body::after {
         content: "";
         background: url('imgs/background_1920.jpg');
@@ -20,18 +18,12 @@
         background-size: cover;
         background-attachment: fixed;
     }
-
-    #app,
-    main {
-        height: 100%;
-        overflow: hidden;
+    nav {
+        position: absolute !important;
+        width: 100%;
     }
-
-    @media (max-height: 750px) {
-        #app,
-        main {
-            height: auto;
-        }
+    #main-content {
+        padding-top: 56px;
     }
     
 </style>
@@ -39,7 +31,7 @@
 
 @section('content')
 
-<div class="container d-flex justify-content-center align-items-center h-100">
+<div id="main-content" class="container d-flex justify-content-center align-items-center my-auto">
     <div class="text-dark">
         <div class="display-4 my-3">
             {{ config('setting.home_page_introduction_title') }}
