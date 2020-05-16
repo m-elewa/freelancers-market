@@ -35,3 +35,9 @@ docker-stop:
 
 deploy:
 	@cd laradock && docker-compose exec --user=laradock workspace bash -c '~/.composer/vendor/bin/envoy run deploy'
+
+exec:
+ifndef command
+	$(error command is required)
+endif
+	cd laradock && docker-compose exec --user=laradock workspace $(command)

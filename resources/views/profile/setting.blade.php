@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Setting')
 @section('css')
-
+<x-app-layouts.background/>
 @endsection
 
 @section('content')

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Post a Project')
 @section('css')
+<x-app-layouts.background/>
 @endsection
 
 @section('javascript')
