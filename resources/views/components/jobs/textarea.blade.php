@@ -1,3 +1,4 @@
+@push('scripts')
 <script src="{{ mix('node_modules/tinymce/tinymce.js') }}"></script>
 <script>
 
@@ -31,3 +32,4 @@ $("button[type='submit']").click(function () {
 
 })
 </script>
+@endpush

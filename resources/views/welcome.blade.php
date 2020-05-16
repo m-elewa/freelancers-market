@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('css')
+@push('css')
 <x-app-layouts.background/>
-@endsection
+@endpush
 @section('content')
 <div id="main-content" class="container d-flex justify-content-center align-items-center pb-5 my-auto">
     <div class="text-dark">
@@ -12,4 +12,5 @@
         <a class="btn btn-primary btn-lg my-3" href="{{ route('register') }}" role="button">Get Started</a>
     </div>
 </div>
+<x-app-layouts.footer/>
 @endsection

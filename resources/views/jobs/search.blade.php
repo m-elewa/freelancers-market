@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Find Work')
-@section('css')
-@endsection
-
+@push('css')
+@endpush
 @section('content')
 <div class="container">
     <div class="row d-flex justify-content-between">

@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('title', 'My Bids')
-@section('css')
-@endsection
-
+@push('css')
+@endpush
 @section('content')
 <div class="container">
     <h1 class="mb-4">My Bids</h1>

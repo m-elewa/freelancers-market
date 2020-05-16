@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', __('Verify Your Email Address'))
-@section('css')
+@push('css')
 <x-app-layouts.background/>
-@endsection
+@endpush
 @section('content')
 <div class="container my-auto pb-5">
     <div class="row justify-content-center">
