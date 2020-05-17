@@ -149,8 +149,8 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['horizon'],
+                'connection' => 'horizon',
+                'queue' => ['default'],
                 'balance' => 'simple',
                 'processes' => 10,
                 'tries' => 1,
@@ -159,8 +159,8 @@ return [
 
         'local' => [
             'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['horizon'],
+                'connection' => 'horizon',
+                'queue' => ['default'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
