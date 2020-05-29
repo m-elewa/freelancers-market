@@ -31,15 +31,13 @@ git clone -b develop --recurse-submodules https://github.com/m-elewa/freelancers
     && cd freelancers-market \
     && git submodule update --remote \
     && cd laradock \
-    && touch traefik/data/acme.json \
-    && chmod 600 traefik/data/acme.json \
     && cp env-example .env
 ```
 2. Change `DOCKER_HOST_IP` in `.env` file to your Docker Host IP if you want to use XDebug
 3. Change `HOST_DOMAIN` and `ACME_EMAIL` in `.env` file to your website domain and email
-4. Run Docker Containers with `make docker-up` command from the root directory or from laradock directory run
+4. Run Docker Containers with `make up` command from the root directory or from laradock directory run
 ```
-docker-compose up -d --build --scale nginx=3 nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server traefik ide-theia
+docker-compose up -d --build --scale nginx=3
 ```
 5. To setup the application Run `make setup` from the root directory or from laradock directory run
 ```

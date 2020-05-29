@@ -1,6 +1,5 @@
-#!/bin/bash
-
 -include .env
+.PHONY: test seed setup bash up stop deploy exec
 
 test-database: .env
 	@cd laradock && docker-compose exec mysql mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) -e \
@@ -19,7 +18,7 @@ bash:
 	@cd laradock && docker-compose exec --user=laradock workspace bash
 
 npm-watch:
-	@cd laradock && docker-compose exec --user=laradock workspace bash -c 'npm run watch'
+	@cd laradock && docker-compose exec --user=laradock workspace npm run watch
 
 scout-import:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:import App\\Job
@@ -27,16 +26,18 @@ scout-import:
 scout-flush:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Job
 
+# run all containers
 up:
-	@cd laradock && docker-compose up -d --build --scale nginx=3 nginx mysql phpmyadmin workspace portainer \
-		redis laravel-horizon laravel-echo-server traefik ide-theia redis-webui netdata
+	@cd laradock && sudo docker-compose up -d --build --scale nginx=3
 
-stop:
-	@cd laradock && docker-compose stop
+# stop all containers
+down:
+	@cd laradock && docker-compose down
 
 deploy:
 	@cd laradock && docker-compose exec --user=laradock workspace bash -c '~/.composer/vendor/bin/envoy run deploy'
 
+# execute a command on the container
 exec:
 ifndef command
 	$(error command is required)
