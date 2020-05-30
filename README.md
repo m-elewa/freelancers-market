@@ -48,10 +48,10 @@ You can now login with `admin@example.com` and password as `password`
 - run `make test-database` to create `test` database for tests
 - run `make test` to test the application
 - run `make seed` to drop all tables then migrate and seed the database
-- for Laravel Telescope go to `localhost/telescope`
-- for Laravel Horizon go to `localhost/horizon`
-- for Portainer go to `localhost:9010`
-- for phpMyAdmin go to `localhost:8080`
+- for Laravel Telescope go to `https//{YOURDOMAIN.COM}/telescope`
+- for Laravel Horizon go to `https//{YOURDOMAIN.COM}/horizon`
+- for Portainer go to `{YOURDOMAIN.COM}:9010`
+- for phpMyAdmin go to `{YOURDOMAIN.COM}:8080`
 - to enter the Workspace container run `make bash` or
 ```
 docker-compose exec --user=laradock workspace bash
