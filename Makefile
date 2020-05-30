@@ -42,4 +42,4 @@ exec:
 ifndef command
 	$(error command is required)
 endif
-	cd laradock && docker-compose exec --user=laradock workspace $(command)
+	@cd laradock && docker-compose exec --user=laradock workspace $(command)

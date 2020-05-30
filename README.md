@@ -27,23 +27,22 @@ In order to use Freelancers Market, you will need:
 
 1. Install the project
 ```
-git clone -b develop --recurse-submodules https://github.com/m-elewa/freelancers-market.git \
+git clone --recurse-submodules https://github.com/m-elewa/freelancers-market.git \
     && cd freelancers-market \
     && git submodule update --remote \
     && cd laradock \
     && cp env-example .env
 ```
-2. Change `DOCKER_HOST_IP` in `.env` file to your Docker Host IP if you want to use XDebug
-3. Change `HOST_DOMAIN` and `ACME_EMAIL` in `.env` file to your website domain and email
-4. Run Docker Containers with `make up` command from the root directory or from laradock directory run
+2. Change `HOST_DOMAIN` and `ACME_EMAIL` in `.env` file to your website domain and email
+3. Run Docker Containers with `make up` command from the root directory or from laradock directory run
 ```
 docker-compose up -d --build --scale nginx=3
 ```
-5. To setup the application Run `make setup` from the root directory or from laradock directory run
+4. Setup the application by running `make setup` from the root directory or from laradock directory run
 ```
 docker-compose exec --user=laradock workspace composer setup
 ```
-6. You can now login with `admin@example.com` and password as `password`
+You can now login with `admin@example.com` and password as `password`
 
 ## Tips
 - run `make test-database` to create `test` database for tests
