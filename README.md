@@ -25,37 +25,33 @@ In order to use Freelancers Market, you will need:
 
 ## Installation
 
-1. Clone the source code `git clone --recurse-submodules https://github.com/m-elewa/freelancers-market.git`
-2. Enter the laradock folder and rename env-example to .env `cp env-example .env`
-3. Make these changes to `.env`
-```shell
-### PHP Version ###########################################
-PHP_VERSION=7.4
-### WORKSPACE #############################################
-WORKSPACE_VUE_CLI_SERVE_HOST_PORT=9090
+1. Install the project
 ```
-4. Rename `laravel-horizon.conf.example` to `laravel-horizon.conf`
+git clone --recurse-submodules https://github.com/m-elewa/freelancers-market.git \
+    && cd freelancers-market \
+    && git submodule update --remote \
+    && cd laradock \
+    && cp env-example .env
 ```
-cp laravel-horizon/supervisord.d/laravel-horizon.conf.example laravel-horizon/supervisord.d/laravel-horizon.conf
+2. Change `HOST_DOMAIN` and `ACME_EMAIL` in `.env` file to your website domain and email
+3. Run Docker Containers with `make up` command from the root directory or from laradock directory run
 ```
-5. Run Docker Containers `make docker-up` or
+docker-compose up -d --build --scale nginx=3
 ```
-docker-compose up -d nginx mysql phpmyadmin workspace portainer redis laravel-horizon laravel-echo-server
-```
-6. To setup the application Run `make setup` or
+4. Setup the application by running `make setup` from the root directory or from laradock directory run
 ```
 docker-compose exec --user=laradock workspace composer setup
 ```
-7. You can now login with `admin@example.com` and password as `password` on `localhost`
+You can now login with `admin@example.com` and password as `password`
 
 ## Tips
 - run `make test-database` to create `test` database for tests
 - run `make test` to test the application
 - run `make seed` to drop all tables then migrate and seed the database
-- for Laravel Telescope go to `localhost/telescope`
-- for Laravel Horizon go to `localhost/horizon`
-- for Portainer go to `localhost:9010`
-- for phpMyAdmin go to `localhost:8080`
+- for Laravel Telescope go to `https//{YOURDOMAIN.COM}/telescope`
+- for Laravel Horizon go to `https//{YOURDOMAIN.COM}/horizon`
+- for Portainer go to `{YOURDOMAIN.COM}:9010`
+- for phpMyAdmin go to `{YOURDOMAIN.COM}:8080`
 - to enter the Workspace container run `make bash` or
 ```
 docker-compose exec --user=laradock workspace bash

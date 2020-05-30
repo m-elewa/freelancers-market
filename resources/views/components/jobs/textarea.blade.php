@@ -1,4 +1,5 @@
-<script src="{{ asset('node_modules/tinymce/tinymce.js') }}"></script>
+@push('scripts')
+<script src="{{ mix('node_modules/tinymce/tinymce.js') }}"></script>
 <script>
 
 var ed = new tinymce.Editor('description', {
@@ -31,3 +32,4 @@ $("button[type='submit']").click(function () {
 
 })
 </script>
+@endpush

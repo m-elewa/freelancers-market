@@ -98,6 +98,7 @@ return [
     |
     */
 
+    // TODO: Redis sessions are using the same prefix for some unknown reasons!
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
 
 ];

@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Setting')
-@section('css')
-
-@endsection
-
+@push('css')
+<x-app-layouts.background/>
+@endpush
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

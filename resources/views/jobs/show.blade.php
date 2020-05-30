@@ -1,9 +1,7 @@
 @extends('layouts.app')
 @section('title', $job->title)
-
-@section('css')
-@endsection
-
+@push('css')
+@endpush
 @section('javascript')
 <x-jobs.textarea />
 @endsection

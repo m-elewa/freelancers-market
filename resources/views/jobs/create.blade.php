@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Post a Project')
-@section('css')
-@endsection
-
+@push('css')
+<x-app-layouts.background/>
+@endpush
 @section('javascript')
 <x-jobs.textarea />
 @endsection
