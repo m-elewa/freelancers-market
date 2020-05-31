@@ -1,6 +1,11 @@
 -include .env
 .PHONY: test seed setup bash up stop deploy exec
 
+# the first target is the one that executed by default
+# run all containers
+up:
+	@cd laradock && sudo docker-compose up -d --build --scale nginx=3
+
 test-database: .env
 	@cd laradock && docker-compose exec mysql mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) -e \
 		'CREATE DATABASE IF NOT EXISTS `test` CHARACTER SET utf8 COLLATE utf8_general_ci'
@@ -25,10 +30,6 @@ scout-import:
 
 scout-flush:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Job
-
-# run all containers
-up:
-	@cd laradock && sudo docker-compose up -d --build --scale nginx=3
 
 # stop all containers
 down:
