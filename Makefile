@@ -2,7 +2,8 @@
 .PHONY: test seed setup bash up stop deploy exec
 
 # the first target is the one that executed by default
-# run all containers
+# run all containers (workspace php-fpm laravel-horizon nginx mysql redis phpmyadmin 
+# laravel-echo-server portainer docker-in-docker netdata redis-webui ide-theia traefik)
 up:
 	@cd laradock && sudo docker-compose up -d --build --scale nginx=3
 
@@ -32,6 +33,9 @@ scout-flush:
 	@cd laradock && docker-compose exec --user=laradock workspace php artisan scout:flush App\\Job
 
 # stop all containers
+stop:
+	@cd laradock && docker-compose stop
+
 down:
 	@cd laradock && docker-compose down
 
